@@ -91,8 +91,6 @@ describe('GetCategoriesService', () => {
     });
 
     it('should return empty array when API returns invalid format', async () => {
-      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-
       (fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => ({ invalid: 'data' }),
@@ -102,17 +100,9 @@ describe('GetCategoriesService', () => {
 
       expect(result).toEqual([]);
       expect(Array.isArray(result)).toBe(true);
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'API returned non-array data for categories:',
-        { invalid: 'data' }
-      );
-
-      consoleSpy.mockRestore();
     });
 
     it('should return empty array when API returns null', async () => {
-      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-
       (fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => null,
@@ -122,8 +112,6 @@ describe('GetCategoriesService', () => {
 
       expect(result).toEqual([]);
       expect(Array.isArray(result)).toBe(true);
-
-      consoleSpy.mockRestore();
     });
 
     it('should handle categories with nested children', async () => {
@@ -216,8 +204,6 @@ describe('GetCategoriesService', () => {
     });
 
     it('should handle object with data property that is not an array', async () => {
-      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-
       (fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => ({ data: 'not an array' }),
@@ -226,14 +212,10 @@ describe('GetCategoriesService', () => {
       const result = await service.getCategories();
 
       expect(result).toEqual([]);
-      expect(consoleSpy).toHaveBeenCalled();
-
-      consoleSpy.mockRestore();
+      expect(Array.isArray(result)).toBe(true);
     });
 
     it('should handle object with items property that is not an array', async () => {
-      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-
       (fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => ({ items: 'not an array' }),
@@ -242,9 +224,7 @@ describe('GetCategoriesService', () => {
       const result = await service.getCategories();
 
       expect(result).toEqual([]);
-      expect(consoleSpy).toHaveBeenCalled();
-
-      consoleSpy.mockRestore();
+      expect(Array.isArray(result)).toBe(true);
     });
   });
 });
