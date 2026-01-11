@@ -10,13 +10,13 @@ interface CardAvailabilityProps {
 export function CardAvailability({ availability, availabilityColor, isInStock }: CardAvailabilityProps) {
   return (
     <>
-      <span className="text-description text-xs" style={{ color: availabilityColor }}>
+      <span className="card-availability__text text-description text-xs" style={{ color: availabilityColor }}>
         {availability}
       </span>
       {!isInStock && (
         <Tooltip text="Узнать подробности о наличии товара">
           <button
-            className="cursor-pointer w-3.5 h-3.5 rounded-full flex items-center justify-center hover:bg-gray-100"
+            className="card-availability__button cursor-pointer w-3.5 h-3.5 rounded-full flex items-center justify-center hover:bg-gray-100"
             aria-label="Информация о наличии"
           >
             <Image

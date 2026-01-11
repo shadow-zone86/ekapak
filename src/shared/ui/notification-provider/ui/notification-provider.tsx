@@ -50,7 +50,7 @@ export function NotificationProvider({ children }: NotificationProviderProps) {
     <NotificationContext.Provider value={{ addNotification, removeNotification, clearNotifications }}>
       {children}
       {/* Notification container */}
-      <div className="fixed top-20 right-4 z-50 flex flex-col gap-3 max-w-[480px]">
+      <div className="notification-provider__container fixed top-20 right-4 z-50 flex flex-col gap-3 max-w-[480px]">
         {notifications.map((notification) => (
           <Notification key={notification.id} {...notification} />
         ))}

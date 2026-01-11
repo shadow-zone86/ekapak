@@ -54,6 +54,7 @@ export function ScrollAnimateWrapper({ children, className, delay = 0 }: ScrollA
     <div
       ref={elementRef}
       className={cn(
+        'scroll-animate-wrapper',
         'animate-on-scroll',
         isVisible && 'visible',
         className

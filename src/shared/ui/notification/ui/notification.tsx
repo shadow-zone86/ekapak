@@ -91,6 +91,8 @@ export function Notification({
   return (
     <div
       className={cn(
+        'notification',
+        `notification--${type}`,
         'relative flex items-start gap-3 p-4 bg-white rounded-xl shadow-lg border-l-4 min-w-[320px] max-w-[480px] animate-slide-in-up',
         typeStyles[type]
       )}
@@ -99,7 +101,7 @@ export function Notification({
       {closable && (
         <button
           onClick={handleClose}
-          className="absolute top-3 right-3 flex items-center justify-center w-6 h-6 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-smooth active:scale-95 z-10"
+          className="notification__close absolute top-3 right-3 flex items-center justify-center w-6 h-6 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-smooth active:scale-95 z-10"
           aria-label="Закрыть уведомление"
         >
           <svg
@@ -123,6 +125,7 @@ export function Notification({
       {/* Icon */}
       <div
         className={cn(
+          'notification__icon',
           'flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0',
           iconStyles[type]
         )}
@@ -198,18 +201,18 @@ export function Notification({
       </div>
 
       {/* Content */}
-      <div className="flex-1 min-w-0">
+      <div className="notification__content flex-1 min-w-0">
         {title && (
-          <h3 className="mb-1 text-base font-semibold leading-tight text-gray-900">{title}</h3>
+          <h3 className="notification__title mb-1 text-base font-semibold leading-tight text-gray-900">{title}</h3>
         )}
-        <p className="text-sm leading-relaxed text-gray-600 break-words">{message}</p>
+        <p className="notification__message text-sm leading-relaxed text-gray-600 break-words">{message}</p>
       </div>
 
       {/* Progress bar */}
       {autoClose && showProgress && (
-        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-200 overflow-hidden rounded-b-xl">
+        <div className="notification__progress-wrapper absolute bottom-0 left-0 right-0 h-0.5 bg-gray-200 overflow-hidden rounded-b-xl">
           <div
-            className={cn('h-full transition-all duration-100', progressColors[type])}
+            className={cn('notification__progress', 'h-full transition-all duration-100', progressColors[type])}
             style={{ width: `${progressWidth}%` }}
           />
         </div>

@@ -10,49 +10,49 @@ interface TypographyProps {
  * H1 heading: MANROPE BOLD 40/130%
  */
 export function H1({ children, className }: TypographyProps) {
-  return <h1 className={cn('h1', className)}>{children}</h1>;
+  return <h1 className={cn('typography typography--h1 h1', className)}>{children}</h1>;
 }
 
 /**
  * H2 heading: MANROPE BOLD 30/130%
  */
 export function H2({ children, className }: TypographyProps) {
-  return <h2 className={cn('h2', className)}>{children}</h2>;
+  return <h2 className={cn('typography typography--h2 h2', className)}>{children}</h2>;
 }
 
 /**
  * H3 heading: MANROPE BOLD 24/140%
  */
 export function H3({ children, className }: TypographyProps) {
-  return <h3 className={cn('h3', className)}>{children}</h3>;
+  return <h3 className={cn('typography typography--h3 h3', className)}>{children}</h3>;
 }
 
 /**
  * P text bold: MANROPE BOLD 18/140%
  */
 export function PTextBold({ children, className }: TypographyProps) {
-  return <p className={cn('text-p-bold', className)}>{children}</p>;
+  return <p className={cn('typography typography--text-p-bold text-p-bold', className)}>{children}</p>;
 }
 
 /**
  * P text: MANROPE REGULAR 18/140%
  */
 export function PText({ children, className }: TypographyProps) {
-  return <p className={cn('text-p', className)}>{children}</p>;
+  return <p className={cn('typography typography--text-p text-p', className)}>{children}</p>;
 }
 
 /**
  * P text catalog: MANROPE REGULAR 18/140%
  */
 export function PTextCatalog({ children, className }: TypographyProps) {
-  return <p className={cn('text-p-catalog', className)}>{children}</p>;
+  return <p className={cn('typography typography--text-p-catalog text-p-catalog', className)}>{children}</p>;
 }
 
 /**
  * Price: MANROPE BOLD 14/140%
  */
 export function Price({ children, className }: TypographyProps) {
-  return <span className={cn('text-price', className)}>{children}</span>;
+  return <span className={cn('typography typography--price text-price', className)}>{children}</span>;
 }
 
 /**
@@ -60,5 +60,5 @@ export function Price({ children, className }: TypographyProps) {
  * Default color: gray (#9A9A9A)
  */
 export function Description({ children, className }: TypographyProps) {
-  return <p className={cn('text-description text-gray', className)}>{children}</p>;
+  return <p className={cn('typography typography--description text-description text-gray', className)}>{children}</p>;
 }
