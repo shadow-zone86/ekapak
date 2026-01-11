@@ -2,23 +2,18 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { useProductSort, type SortOption } from '../lib/useProductSort';
+import { useProductSort } from '../lib/useProductSort';
 import { cn } from '@/shared/lib/utils';
+import type { SortOption, ISortOptions } from '../model/types';
+import { sortOptions } from '../config/sortOptions';
 
-const sortOptions: { value: SortOption; label: string }[] = [
-  { value: 'default', label: 'По умолчанию' },
-  { value: 'name-asc', label: 'По имени (А-Я)' },
-  { value: 'name-desc', label: 'По имени (Я-А)' },
-  { value: 'price-asc', label: 'По цене (возрастание)' },
-  { value: 'price-desc', label: 'По цене (убывание)' },
-];
 
 export function ProductSort() {
   const { selectedSort, setSort } = useProductSort();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const selectedOption = sortOptions.find((option) => option.value === selectedSort) || sortOptions[0];
+  const selectedOption = sortOptions.find((option: ISortOptions) => option.value === selectedSort) || sortOptions[0];
 
   // Закрытие dropdown при клике вне его
   useEffect(() => {
@@ -43,11 +38,12 @@ export function ProductSort() {
   };
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div className="product-sort relative" ref={dropdownRef}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
+          'product-sort__button',
           'flex items-center gap-2 rounded-lg border border-stroke bg-white px-4 py-2 text-sm',
           'hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent',
           'transition-all cursor-pointer'
@@ -60,23 +56,24 @@ export function ProductSort() {
           alt="Sort"
           width={16}
           height={16}
-          className={cn('transition-transform', isOpen && 'rotate-180')}
+          className={cn('product-sort__icon', 'transition-transform', isOpen && 'rotate-180')}
         />
-        <span className="text-black">{selectedOption.label}</span>
+        <span className="product-sort__label text-black">{selectedOption.label}</span>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 rounded-lg border border-stroke bg-white shadow-lg z-50 animate-scale-in">
-          <div className="py-1">
+        <div className="product-sort__dropdown absolute right-0 mt-2 w-56 rounded-lg border border-stroke bg-white shadow-lg z-50 animate-scale-in">
+          <div className="product-sort__options py-1">
             {sortOptions.map((option, index) => (
               <button
                 key={option.value}
                 type="button"
                 onClick={() => handleSelect(option.value)}
                 className={cn(
+                  'product-sort__option',
                   'w-full text-left px-4 py-2 text-sm transition-smooth',
                   'hover:bg-gray-100 focus:outline-none focus:bg-gray-100',
-                  selectedSort === option.value && 'bg-blue-50 text-blue-600 font-medium'
+                  selectedSort === option.value && 'product-sort__option--active bg-blue-50 text-blue-600 font-medium'
                 )}
                 style={{
                   animation: `slideInUp 0.2s ease-out ${index * 0.03}s both`

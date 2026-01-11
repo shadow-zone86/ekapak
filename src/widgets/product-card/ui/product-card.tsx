@@ -18,10 +18,10 @@ export function ProductCard({ slug }: ProductCardProps) {
 
   if (isLoading) {
     return (
-      <div className="py-12">
+      <div className="product-card product-card--loading py-12">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <div className="aspect-square animate-pulse rounded-lg bg-gray-200" />
-          <div className="space-y-4">
+          <div className="product-card__skeleton-image aspect-square animate-pulse rounded-lg bg-gray-200" />
+          <div className="product-card__skeleton-content space-y-4">
             <div className="h-8 w-3/4 animate-pulse rounded bg-gray-200" />
             <div className="h-4 w-1/2 animate-pulse rounded bg-gray-200" />
             <div className="h-24 w-full animate-pulse rounded bg-gray-200" />
@@ -33,7 +33,7 @@ export function ProductCard({ slug }: ProductCardProps) {
 
   if (error || !product) {
     return (
-      <div className="py-12 text-center">
+      <div className="product-card product-card--error py-12 text-center">
         <H1 className="mb-4">Товар не найден</H1>
         <PText className="text-gray">К сожалению, товар с таким адресом не существует.</PText>
       </div>
@@ -45,46 +45,46 @@ export function ProductCard({ slug }: ProductCardProps) {
 
   return (
     <ProductQuantityProvider initialQuantity={initialQuantity}>
-      <div className="py-6">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      <div className="product-card py-6">
+        <div className="product-card__container grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* Изображение товара */}
-          <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-background">
+          <div className="product-card__image-wrapper relative aspect-square w-full overflow-hidden rounded-lg bg-background">
             {product.image ? (
               <Image
                 src={product.image}
                 alt={product.name}
                 fill
-                className="object-contain p-4"
+                className="product-card__image object-contain p-4"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 priority
               />
             ) : (
-              <div className="flex h-full items-center justify-center text-gray text-lg">
+              <div className="product-card__image-placeholder flex h-full items-center justify-center text-gray text-lg">
                 Нет изображения
               </div>
             )}
             {/* Кнопка избранного */}
-            <div className="absolute top-5 right-4 z-10">
+            <div className="product-card__favorite-wrapper absolute top-5 right-4 z-10">
               <FavoriteButton productUuid={product.uuid} productName={product.name} />
             </div>
           </div>
 
           {/* Информация о товаре */}
-          <div className="flex flex-col gap-6">
+          <div className="product-card__info flex flex-col gap-6">
             {/* Артикул */}
             {product.sku && (
-              <Description className="text-gray text-sm">
+              <Description className="product-card__sku text-gray text-sm">
                 Артикул: {product.sku}
               </Description>
             )}
 
             {/* Название */}
-            <H1 className="text-2xl font-bold text-black lg:text-3xl">
+            <H1 className="product-card__title text-2xl font-bold text-black lg:text-3xl">
               {product.name}
             </H1>
 
             {/* Наличие */}
-            <div className="flex items-center gap-2">
+            <div className="product-card__availability flex items-center gap-2">
               <CardAvailability
                 availability={product.availability}
                 availabilityColor={product.availabilityColor}
@@ -94,11 +94,11 @@ export function ProductCard({ slug }: ProductCardProps) {
 
             {/* Цена */}
             {defaultOffer && (
-              <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-black">
+              <div className="product-card__price flex items-baseline gap-2">
+                <span className="product-card__price-value text-3xl font-bold text-black">
                   {defaultOffer.formattedPrice}
                 </span>
-                <span className="text-lg text-gray">
+                <span className="product-card__price-unit text-lg text-gray">
                   за {defaultOffer.unit}
                 </span>
               </div>
@@ -106,7 +106,7 @@ export function ProductCard({ slug }: ProductCardProps) {
 
             {/* Описание */}
             {product.description && (
-              <Card variant="outlined" className="p-4">
+              <Card variant="outlined" className="product-card__description p-4">
                 <PText className="text-gray whitespace-pre-line">
                   {product.description}
                 </PText>
@@ -115,8 +115,8 @@ export function ProductCard({ slug }: ProductCardProps) {
 
             {/* Управление количеством */}
             {defaultOffer && (
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center justify-center">
+              <div className="product-card__controls flex flex-col gap-4">
+                <div className="product-card__quantity-wrapper flex items-center justify-center">
                   <ProductQuantityControls defaultOffer={defaultOffer} withBorder={true} />
                 </div>
                 <AddToCartButton product={product} />
@@ -125,17 +125,17 @@ export function ProductCard({ slug }: ProductCardProps) {
 
             {/* Все предложения, если их несколько */}
             {product.hasMultipleOffers && product.offers.length > 1 && (
-              <Card variant="outlined" className="p-4">
-                <H1 className="mb-4 text-lg font-semibold">Доступные варианты:</H1>
-                <div className="space-y-2">
+              <Card variant="outlined" className="product-card__offers p-4">
+                <H1 className="product-card__offers-title mb-4 text-lg font-semibold">Доступные варианты:</H1>
+                <div className="product-card__offers-list space-y-2">
                   {product.offers.map((offer) => (
                     <div
                       key={offer.uuid}
-                      className="flex items-center justify-between rounded border border-stroke p-3"
+                      className="product-card__offer-item flex items-center justify-between rounded border border-stroke p-3"
                     >
-                      <div>
-                        <PText className="font-medium">{offer.name}</PText>
-                        <Description className="text-xs text-gray">
+                      <div className="product-card__offer-info">
+                        <PText className="product-card__offer-name font-medium">{offer.name}</PText>
+                        <Description className="product-card__offer-price text-xs text-gray">
                           {offer.formattedPrice} за {offer.unit}
                         </Description>
                       </div>

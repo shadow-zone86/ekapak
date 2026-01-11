@@ -1,5 +1,5 @@
 import type { IProductUiDto } from '@/entities/product/model/dto/types';
-import type { SortOption } from './useProductSort';
+import type { SortOption } from '../model/types';
 
 export function sortProducts(products: IProductUiDto[], sortOption: SortOption): IProductUiDto[] {
   if (sortOption === 'default') {

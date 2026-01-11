@@ -1,6 +1,6 @@
 import { sortProducts } from './sortProducts';
 import type { IProductUiDto } from '@/entities/product/model/dto/types';
-import type { SortOption } from './useProductSort';
+import type { SortOption } from '../model/types';
 
 describe('sortProducts', () => {
   const mockProducts: IProductUiDto[] = [
@@ -21,6 +21,7 @@ describe('sortProducts', () => {
         quantity: 1,
         minPurchase: 1,
         isAvailable: true,
+        priceType: '',
       },
       offers: [],
       hasMultipleOffers: false,
@@ -45,6 +46,7 @@ describe('sortProducts', () => {
         quantity: 1,
         minPurchase: 1,
         isAvailable: true,
+        priceType: '',
       },
       offers: [],
       hasMultipleOffers: false,
@@ -69,6 +71,7 @@ describe('sortProducts', () => {
         quantity: 1,
         minPurchase: 1,
         isAvailable: true,
+        priceType: '',
       },
       offers: [],
       hasMultipleOffers: false,

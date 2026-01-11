@@ -22,7 +22,7 @@ export function CategoryList({
   // Проверяем, что categories - это массив, иначе используем пустой массив
   if (!Array.isArray(categories)) {
     return (
-      <aside className="w-full lg:w-64 min-w-[353px]">
+      <aside className="category-list w-full lg:w-64 min-w-[353px]">
         <Card>
           <CardHeader>
             <H3 className="text-black">Каталог товаров</H3>
@@ -51,14 +51,14 @@ export function CategoryList({
   };
 
   return (
-    <aside className="w-full lg:w-64 min-w-[353px]">
+    <aside className="category-list w-full lg:w-64 min-w-[353px]">
       <Card>
         <CardHeader>
           <H3 className="text-black">
             Каталог товаров
           </H3>
         </CardHeader>
-        <ul className="space-y-2">
+        <ul className="category-list__list space-y-2">
           {rootCategories.map((category) => {
             const isExpanded = expandedCategories.has(category.uuid);
 
@@ -66,27 +66,27 @@ export function CategoryList({
               <li key={category.uuid}>
                 <button
                   onClick={() => toggleCategory(category.uuid)}
-                  className="w-full text-left rounded-md px-3 py-2 text-p transition-colors flex items-center justify-between gap-2 text-black hover:bg-background cursor-pointer"
+                  className="category-list__item-button w-full text-left rounded-md px-3 py-2 text-p transition-colors flex items-center justify-between gap-2 text-black hover:bg-background cursor-pointer"
                 >
-                  <span className="flex-1">{category.name}</span>
+                  <span className="category-list__item-name flex-1">{category.name}</span>
                   <Image
                     src="/arrow.svg"
                     alt={isExpanded ? 'Свернуть' : 'Развернуть'}
                     width={16}
                     height={16}
-                    className={`flex-shrink-0 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
+                    className={`category-list__item-arrow flex-shrink-0 transition-transform ${isExpanded ? 'rotate-90' : ''}`}
                   />
                 </button>
                 {/* Показываем дочерние категории с отступом */}
                 {category.children && (
-                  <ul className={`mt-1 ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                  <ul className={`category-list__children mt-1 ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                     {category.children.map((child) => (
-                      <li key={child.uuid}>
+                      <li key={child.uuid} className="category-list__child-item">
                         <button
                           onClick={() => onCategorySelect?.(child.uuid)}
-                          className={`cursor-pointer w-full text-left rounded-md px-3 py-2 text-description transition-colors ${
+                          className={`category-list__child-button cursor-pointer w-full text-left rounded-md px-3 py-2 text-description transition-colors ${
                             selectedCategory === child.uuid
-                              ? 'bg-blue-50 text-blue-600 font-bold'
+                              ? 'category-list__child-button--selected bg-blue-50 text-blue-600 font-bold'
                               : 'text-gray hover:bg-background'
                           }`}
                         >

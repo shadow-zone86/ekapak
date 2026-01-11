@@ -27,7 +27,7 @@ export function Tooltip({ children, text, className = '' }: TooltipProps) {
     <>
       <div
         ref={triggerRef}
-        className={`relative inline-block ${className}`}
+        className={`tooltip__trigger relative inline-block ${className}`}
         onMouseEnter={() => setIsVisible(true)}
         onMouseLeave={() => setIsVisible(false)}
       >
@@ -35,15 +35,15 @@ export function Tooltip({ children, text, className = '' }: TooltipProps) {
       </div>
       {isVisible && (
         <div
-          className="fixed z-50 px-2 py-1.5 bg-white text-black text-xs rounded border border-stroke shadow-lg whitespace-nowrap pointer-events-none"
+          className="tooltip fixed z-50 px-2 py-1.5 bg-white text-black text-xs rounded border border-stroke shadow-lg whitespace-nowrap pointer-events-none"
           style={{
             top: `${position.top}px`,
             left: `${position.left}px`,
             transform: 'translate(-50%, -100%)',
           }}
         >
-          {text}
-          <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1">
+          <span className="tooltip__text">{text}</span>
+          <div className="tooltip__arrow absolute top-full left-1/2 -translate-x-1/2 -mt-1">
             <div className="border-4 border-transparent border-t-stroke"></div>
           </div>
         </div>

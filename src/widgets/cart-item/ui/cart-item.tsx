@@ -40,11 +40,11 @@ function CartItemContent({ cartItem, product }: CartItemProps) {
       product={product}
       quantityControls={defaultOffer ? <ProductQuantityControls defaultOffer={defaultOffer} withBorder /> : null}
       price={
-        <div className="text-left">
-          <div className="text-base font-semibold text-black">
+        <div className="cart-item__price text-left">
+          <div className="cart-item__price-total text-base font-semibold text-black">
             {(cartItem.price * quantity).toFixed(2)}{cartItem.currency.trim().toUpperCase() === 'RUB' ? 'Р' : cartItem.currency}
           </div>
-          <Description className="text-xs text-gray-600">
+          <Description className="cart-item__price-details text-xs text-gray-600">
             {quantity} × {cartItem.price.toFixed(2)}
           </Description>
         </div>

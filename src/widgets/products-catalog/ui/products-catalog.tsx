@@ -55,26 +55,26 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
   const totalPages = searchQuery.trim() ? 1 : (meta?.last_page || 1);
 
   return (
-    <div className="flex flex-col gap-[10px] lg:flex-row">
+    <div className="products-catalog flex flex-col gap-[10px] lg:flex-row">
       <CategoryFilter />
 
-      <div className="flex-1">
-        <div className="mb-4 flex items-center justify-end">
+      <div className="products-catalog__content flex-1">
+        <div className="products-catalog__sort-wrapper mb-4 flex items-center justify-end">
           <ProductSort />
         </div>
         <>
           {isLoadingProducts ? (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="products-catalog__skeleton grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {[...Array(8)].map((_, i) => (
                 <div
                   key={i}
-                  className="h-80 animate-pulse rounded-lg bg-gray-200"
+                  className="products-catalog__skeleton-item h-80 animate-pulse rounded-lg bg-gray-200"
                 />
               ))}
             </div>
           ) : filteredAndSortedProducts.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              <div className="products-catalog__grid grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
                 {filteredAndSortedProducts.map((product, index) => {
                   const defaultOffer = product.defaultOffer;
                   if (!defaultOffer) {
@@ -101,7 +101,7 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
               )}
             </>
           ) : (
-            <div className="col-span-full py-12 text-center text-gray">
+            <div className="products-catalog__empty col-span-full py-12 text-center text-gray">
               Товары не найдены
             </div>
           )}

@@ -21,14 +21,14 @@ export function Pagination({ currentPage, totalPages, basePath = '/' }: Paginati
   }
 
   return (
-    <div className="mt-8 flex items-center justify-center gap-2">
-      <Button variant="outline" onClick={goToPreviousPage} disabled={!canGoPrevious}>
+    <div className="pagination mt-8 flex items-center justify-center gap-2">
+      <Button variant="outline" onClick={goToPreviousPage} disabled={!canGoPrevious} className="pagination__button pagination__button--prev">
         Назад
       </Button>
-      <span className="px-4 text-description text-gray-600">
+      <span className="pagination__info px-4 text-description text-gray-600">
         Страница {currentPage} из {totalPages}
       </span>
-      <Button variant="outline" onClick={goToNextPage} disabled={!canGoNext}>
+      <Button variant="outline" onClick={goToNextPage} disabled={!canGoNext} className="pagination__button pagination__button--next">
         Вперед
       </Button>
     </div>

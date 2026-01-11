@@ -11,14 +11,14 @@ interface CardPriceProps {
 export function CardPrice({ price, currencySymbol, unit }: CardPriceProps) {
   return (
     <>
-      <Price className="text-black text-lg font-bold">
+      <Price className="card-price__value text-black text-lg font-bold">
         {price.toFixed(2)} {currencySymbol}
       </Price>
-      <span className="text-gray text-xs">/ {unit}</span>
-      <sup className="inline-block">
+      <span className="card-price__unit text-gray text-xs">/ {unit}</span>
+      <sup className="card-price__tax-hint inline-block">
         <Tooltip text="С НДС 20%">
           <button
-            className="cursor-pointer w-[13px] h-[13px] rounded-full flex items-center justify-center hover:bg-blue-50 transition-colors"
+            className="card-price__tax-button cursor-pointer w-[13px] h-[13px] rounded-full flex items-center justify-center hover:bg-blue-50 transition-colors"
             aria-label="Информация о НДС"
           >
             <Image
