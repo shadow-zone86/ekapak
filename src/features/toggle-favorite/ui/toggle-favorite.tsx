@@ -34,7 +34,7 @@ export function FavoriteButton({ productUuid, productName, variant = 'default' }
   return (
     <button
       onClick={toggleFavorite}
-      className="cursor-pointer absolute top-1.5 right-1.5 p-1.5 rounded-full bg-white/80 hover:bg-white transition-colors"
+      className="cursor-pointer p-1.5 rounded-full bg-white/80 hover:bg-white transition-colors"
       aria-label={isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
     >
       <Image
