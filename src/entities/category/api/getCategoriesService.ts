@@ -37,7 +37,6 @@ export default class GetCategoriesService extends BaseApiService<CategoriesRespo
     }
 
     // Если ничего не найдено, возвращаем пустой массив
-    console.warn('API returned non-array data for categories:', response);
     return [];
   }
 }
