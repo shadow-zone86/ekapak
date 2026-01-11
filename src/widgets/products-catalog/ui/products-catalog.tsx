@@ -9,6 +9,7 @@ import { AddToCartButton } from '@/features/toggle-add-to-cart';
 import { FavoriteButton } from '@/features/toggle-favorite';
 import { Pagination } from '@/features/pagination';
 import { CategoryFilter } from '@/features/category-filter';
+import { ProductSort, sortProducts, type SortOption } from '@/features/product-sort';
 
 interface ProductsCatalogProps {
   initialPage: number;
@@ -22,6 +23,7 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
   const page = parseInt(searchParams?.get('page') || '1', 10);
   const categoryUuid = searchParams?.get('category') || undefined;
   const searchQuery = searchParams?.get('search') || '';
+  const sortOption = (searchParams?.get('sort') || 'default') as SortOption;
 
   // Entities: получение данных
   const { data: productsData, isLoading: isLoadingProducts } = useProducts(
@@ -30,19 +32,22 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
     categoryUuid
   );
 
-  // Фильтрация продуктов по названию на фронте
-  const filteredProducts = useMemo(() => {
+  // Фильтрация и сортировка продуктов на фронте
+  const filteredAndSortedProducts = useMemo(() => {
     const allProducts = productsData?.data || [];
 
-    if (!searchQuery.trim()) {
-      return allProducts;
+    // Фильтрация по поисковому запросу
+    let filtered = allProducts;
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      filtered = allProducts.filter((product) =>
+        product.name.toLowerCase().includes(query)
+      );
     }
 
-    const query = searchQuery.toLowerCase().trim();
-    return allProducts.filter((product) =>
-      product.name.toLowerCase().includes(query)
-    );
-  }, [productsData?.data, searchQuery]);
+    // Сортировка
+    return sortProducts(filtered, sortOption);
+  }, [productsData?.data, searchQuery, sortOption]);
 
   const meta = productsData?.meta;
   const totalPages = searchQuery.trim() ? 1 : (meta?.last_page || 1);
@@ -52,6 +57,9 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
       <CategoryFilter />
 
       <div className="flex-1">
+        <div className="mb-4 flex items-center justify-end">
+          <ProductSort />
+        </div>
         <>
           {isLoadingProducts ? (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -62,10 +70,10 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
                 />
               ))}
             </div>
-          ) : filteredProducts.length > 0 ? (
+          ) : filteredAndSortedProducts.length > 0 ? (
             <>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                {filteredProducts.map((product) => {
+                {filteredAndSortedProducts.map((product) => {
                   const defaultOffer = product.defaultOffer;
                   if (!defaultOffer) {
                     return null;

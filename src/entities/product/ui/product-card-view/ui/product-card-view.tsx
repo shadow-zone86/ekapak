@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import type { IProductUiDto } from '../../../model/dto/types';
 import { Card } from '@/shared/ui/card';
 import { Description } from '@/shared/ui/typography';
@@ -31,9 +32,15 @@ export function ProductCardView({
     >
       {/* Изображение продукта с иконкой избранного */}
       <div className="relative w-full overflow-hidden" style={{ aspectRatio: '1 / 1', maxHeight: '200px' }}>
-        <CardImage image={product.image} alt={product.name} />
+        <Link href={`/product/${product.slug}`} className="absolute inset-0 z-0">
+          <CardImage image={product.image} alt={product.name} />
+        </Link>
         {/* Иконка избранного */}
-        {favoriteButton}
+        {favoriteButton && (
+          <div className="absolute top-1.5 right-1.5 z-10" onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
+            {favoriteButton}
+          </div>
+        )}
       </div>
 
       {/* Информация о продукте */}
