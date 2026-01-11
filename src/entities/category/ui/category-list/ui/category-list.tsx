@@ -78,13 +78,13 @@ export function CategoryList({
                   />
                 </button>
                 {/* Показываем дочерние категории с отступом */}
-                {isExpanded && category.children && (
-                  <ul className="mt-1 ml-4 space-y-1">
+                {category.children && (
+                  <ul className={`mt-1 ml-4 space-y-1 overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
                     {category.children.map((child) => (
                       <li key={child.uuid}>
                         <button
                           onClick={() => onCategorySelect?.(child.uuid)}
-                          className={`w-full text-left rounded-md px-3 py-2 text-description transition-colors ${
+                          className={`cursor-pointer w-full text-left rounded-md px-3 py-2 text-description transition-colors ${
                             selectedCategory === child.uuid
                               ? 'bg-blue-50 text-blue-600 font-bold'
                               : 'text-gray hover:bg-background'

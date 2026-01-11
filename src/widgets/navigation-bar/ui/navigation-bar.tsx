@@ -54,10 +54,10 @@ function NavigationBarContent() {
           <Logo />
 
           <div className="flex items-center gap-4 flex-shrink-0">
-            <button className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer">
+            <button className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-smooth cursor-pointer active:scale-95">
               <Image src="/mail.svg" alt="Email" width={20} height={20} className="opacity-70" />
             </button>
-            <button className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer">
+            <button className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-smooth cursor-pointer active:scale-95">
               <Image src="/phone.svg" alt="Phone" width={20} height={20} className="opacity-70" />
             </button>
             <MobileMenuButton />

@@ -16,7 +16,7 @@ export function FavoriteButton({ productUuid, productName, variant = 'default' }
     return (
       <button
         onClick={toggleFavorite}
-        className="cursor-pointer flex h-6 w-6 items-center justify-center rounded border border-gray-300 bg-white text-gray-400 hover:bg-gray-100 hover:text-red-500"
+        className="cursor-pointer flex h-6 w-6 items-center justify-center rounded border border-gray-300 bg-white text-gray-400 hover:bg-gray-100 hover:text-red-500 transition-smooth active:scale-95"
         aria-label={isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
       >
         <Image
@@ -34,7 +34,7 @@ export function FavoriteButton({ productUuid, productName, variant = 'default' }
   return (
     <button
       onClick={toggleFavorite}
-      className="cursor-pointer p-1.5 rounded-full bg-white/80 hover:bg-white transition-colors"
+      className="cursor-pointer p-1.5 rounded-full bg-white/80 hover:bg-white transition-smooth active:scale-95"
       aria-label={isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
     >
       <Image

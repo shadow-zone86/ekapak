@@ -15,27 +15,29 @@ export function useProductSearchWithUrl({ debounceMs = 300 }: UseProductSearchWi
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const params = new URLSearchParams(searchParams?.toString() || '');
+      const currentSearchParam = searchParams?.get('search') || '';
+      const newSearchValue = searchQuery.trim();
       
-      if (searchQuery.trim()) {
-        params.set('search', searchQuery.trim());
-      } else {
-        params.delete('search');
+      // Переходим только если поисковый запрос действительно изменился
+      if (currentSearchParam === newSearchValue) {
+        return;
       }
       
-      // Сбрасываем страницу при поиске
-      params.delete('page');
+      const params = new URLSearchParams(searchParams?.toString() || '');
+      
+      if (newSearchValue) {
+        params.set('search', newSearchValue);
+        // Сбрасываем страницу только при новом поиске
+        params.delete('page');
+      } else {
+        params.delete('search');
+        // При очистке поиска НЕ удаляем page
+      }
       
       const queryString = params.toString();
       const url = queryString ? `${pathname}?${queryString}` : pathname;
       
-      // Переходим только если URL изменился
-      const currentUrl = searchParams?.toString() || '';
-      const newUrl = queryString;
-      
-      if (currentUrl !== newUrl) {
-        router.push(url, { scroll: false });
-      }
+      router.push(url, { scroll: false });
     }, debounceMs);
 
     return () => {

@@ -28,7 +28,7 @@ export function ProductCardView({
     <Card
       variant="default"
       size="sm"
-      className="group relative flex flex-col overflow-hidden p-0 h-full"
+      className="group relative flex flex-col overflow-hidden p-0 h-full animate-fade-in hover:shadow-lg transition-smooth"
     >
       {/* Изображение продукта с иконкой избранного */}
       <div className="relative w-full overflow-hidden" style={{ aspectRatio: '1 / 1', maxHeight: '200px' }}>

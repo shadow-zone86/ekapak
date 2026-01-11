@@ -29,7 +29,7 @@ export function CartItemView({
   const availabilityColor = isInStock ? '#2AC84D' : '#00B0FF';
 
   return (
-    <div className="flex flex-col gap-4 border-b border-stroke py-4 md:flex-row md:gap-4">
+    <div className="flex flex-col gap-4 border-b border-stroke py-4 md:flex-row md:gap-4 animate-fade-in transition-smooth">
       {/* Изображение товара и кнопки действий (мобильная версия) */}
       <div className="flex flex-col gap-4 md:contents">
         <div className="relative h-24 w-24 flex-shrink-0 overflow-hidden rounded-lg bg-background">

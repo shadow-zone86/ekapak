@@ -91,7 +91,7 @@ export function Notification({
   return (
     <div
       className={cn(
-        'relative flex items-start gap-3 p-4 bg-white rounded-xl shadow-lg border-l-4 min-w-[320px] max-w-[480px] transition-all duration-300',
+        'relative flex items-start gap-3 p-4 bg-white rounded-xl shadow-lg border-l-4 min-w-[320px] max-w-[480px] animate-slide-in-up',
         typeStyles[type]
       )}
     >
@@ -99,7 +99,7 @@ export function Notification({
       {closable && (
         <button
           onClick={handleClose}
-          className="absolute top-3 right-3 flex items-center justify-center w-6 h-6 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors z-10"
+          className="absolute top-3 right-3 flex items-center justify-center w-6 h-6 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-smooth active:scale-95 z-10"
           aria-label="Закрыть уведомление"
         >
           <svg
