@@ -24,10 +24,10 @@ export function NavIcon({
 }: NavIconProps) {
   const content = (
     <>
-      <Image src={icon} alt={label} width={iconSize} height={iconSize} className="opacity-70" />
-      <Description className="text-black text-xs">{label}</Description>
+      <Image src={icon} alt={label} width={iconSize} height={iconSize} className="nav-icon__icon opacity-70" />
+      <Description className="nav-icon__label text-black text-xs">{label}</Description>
       {badge && (
-        <span className="absolute -top-1 -right-1 rounded-full bg-blue-600 text-white text-xs px-1.5 py-0.5 min-w-[20px] text-center">
+        <span className="nav-icon__badge absolute -top-1 -right-1 rounded-full bg-blue-600 text-white text-xs px-1.5 py-0.5 min-w-[20px] text-center">
           {badge}
         </span>
       )}
@@ -35,7 +35,7 @@ export function NavIcon({
   );
 
   const baseClasses =
-    'flex flex-col items-center gap-1 hover:opacity-70 transition-opacity relative cursor-pointer';
+    'nav-icon flex flex-col items-center gap-1 hover:opacity-70 transition-smooth relative cursor-pointer active:scale-95';
 
   if (href) {
     return (

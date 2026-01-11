@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { cn } from '@/shared/lib/utils';
 import { useToggleFavorite } from '../lib/useToggleFavorite';
 
 interface FavoriteButtonProps {
@@ -16,7 +17,7 @@ export function FavoriteButton({ productUuid, productName, variant = 'default' }
     return (
       <button
         onClick={toggleFavorite}
-        className="cursor-pointer flex h-6 w-6 items-center justify-center rounded border border-gray-300 bg-white text-gray-400 hover:bg-gray-100 hover:text-red-500"
+        className="toggle-favorite toggle-favorite--compact cursor-pointer flex h-6 w-6 items-center justify-center rounded border border-gray-300 bg-white text-gray-400 hover:bg-gray-100 hover:text-red-500 transition-smooth active:scale-95"
         aria-label={isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
       >
         <Image
@@ -24,7 +25,7 @@ export function FavoriteButton({ productUuid, productName, variant = 'default' }
           alt={isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
           width={18}
           height={18}
-          className={isFavorite ? 'opacity-100' : 'opacity-70'}
+          className={cn('toggle-favorite__icon', isFavorite ? 'toggle-favorite__icon--active opacity-100' : 'opacity-70')}
           style={isFavorite ? { filter: 'brightness(0) saturate(100%) invert(26%) sepia(96%) saturate(7498%) hue-rotate(346deg) brightness(99%) contrast(97%)' } : undefined}
         />
       </button>
@@ -34,7 +35,7 @@ export function FavoriteButton({ productUuid, productName, variant = 'default' }
   return (
     <button
       onClick={toggleFavorite}
-      className="cursor-pointer p-1.5 rounded-full bg-white/80 hover:bg-white transition-colors"
+      className="toggle-favorite toggle-favorite--default cursor-pointer p-1.5 rounded-full bg-white/80 hover:bg-white transition-smooth active:scale-95"
       aria-label={isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
     >
       <Image
@@ -42,7 +43,7 @@ export function FavoriteButton({ productUuid, productName, variant = 'default' }
         alt={isFavorite ? 'Удалить из избранного' : 'Добавить в избранное'}
         width={18}
         height={18}
-        className={isFavorite ? 'opacity-100' : 'opacity-70'}
+        className={cn('toggle-favorite__icon', isFavorite ? 'toggle-favorite__icon--active opacity-100' : 'opacity-70')}
         style={isFavorite ? { filter: 'brightness(0) saturate(100%) invert(26%) sepia(96%) saturate(7498%) hue-rotate(346deg) brightness(99%) contrast(97%)' } : undefined}
       />
     </button>

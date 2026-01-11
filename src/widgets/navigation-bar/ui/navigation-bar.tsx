@@ -18,7 +18,7 @@ import { useProductSearchWithUrl } from '@/features/product-search/lib/useProduc
 export function NavigationBar() {
   return (
     <Suspense fallback={
-      <div className="h-16 bg-white border-b border-stroke">
+      <div className="navigation-bar navigation-bar--loading h-16 bg-white border-b border-stroke">
         <div className="container mx-auto px-4 py-3">
           <div className="h-10 bg-gray-100 rounded animate-pulse" />
         </div>
@@ -47,17 +47,17 @@ function NavigationBarContent() {
 
   return (
     <MobileMenuProvider>
-      <Card variant="outlined" className="rounded-none border-x-0 border-t-0 border-b-0 p-0">
-        <div className="px-4 py-3">
+      <Card variant="outlined" className="navigation-bar rounded-none border-x-0 border-t-0 border-b-0 p-0">
+        <div className="navigation-bar__content px-4 py-3">
         {/* Mobile: Logo + Icons */}
-        <div className="flex items-center justify-between gap-4 mb-3 md:hidden">
+        <div className="navigation-bar__mobile-header flex items-center justify-between gap-4 mb-3 md:hidden">
           <Logo />
 
-          <div className="flex items-center gap-4 flex-shrink-0">
-            <button className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer">
+          <div className="navigation-bar__mobile-actions flex items-center gap-4 flex-shrink-0">
+            <button className="navigation-bar__mobile-action-button p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-smooth cursor-pointer active:scale-95">
               <Image src="/mail.svg" alt="Email" width={20} height={20} className="opacity-70" />
             </button>
-            <button className="p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors cursor-pointer">
+            <button className="navigation-bar__mobile-action-button p-2 bg-gray-50 hover:bg-gray-100 rounded-lg transition-smooth cursor-pointer active:scale-95">
               <Image src="/phone.svg" alt="Phone" width={20} height={20} className="opacity-70" />
             </button>
             <MobileMenuButton />
@@ -65,10 +65,10 @@ function NavigationBarContent() {
         </div>
 
         {/* Desktop: Main navigation */}
-        <div className="hidden md:block">
+        <div className="navigation-bar__desktop hidden md:block">
           {/* До 1023px - две строки */}
-          <div className="flex flex-col gap-3 max-[1023px]:flex min-[1024px]:hidden">
-            <div className="flex items-center gap-4">
+          <div className="navigation-bar__desktop-compact flex flex-col gap-3 max-[1023px]:flex min-[1024px]:hidden">
+            <div className="navigation-bar__desktop-compact-row flex items-center gap-4">
               <Logo />
               <Link href="/">
                 <Button variant="outline" className="flex items-center gap-2 flex-shrink-0 bg-gray-100 hover:bg-gray-200 border-0">
@@ -84,8 +84,8 @@ function NavigationBarContent() {
               />
             </div>
 
-            <div className="flex items-center justify-between gap-6">
-              <div className="flex items-center gap-6 flex-shrink-0">
+            <div className="navigation-bar__desktop-compact-actions flex items-center justify-between gap-6">
+              <div className="navigation-bar__desktop-compact-icons flex items-center gap-6 flex-shrink-0">
                 <NavIcon icon="/profile.svg" label="Профиль" href="#" />
                 <NavIcon icon="/favorites.svg" label="Избранное" href="/favorites" badge={favoritesBadge} />
                 <NavIcon icon="/cart.svg" label="Корзина" onClick={() => dispatch(openCart())} badge={cartBadge} />
@@ -95,9 +95,9 @@ function NavigationBarContent() {
           </div>
 
           {/* От 1024px - одна строка */}
-          <div className="hidden min-[1024px]:flex items-center w-full">
+          <div className="navigation-bar__desktop-full hidden min-[1024px]:flex items-center w-full">
             <Logo />
-            <Link href="/" className="ml-[30px] mr-[10px]">
+            <Link href="/" className="navigation-bar__catalog-link ml-[30px] mr-[10px]">
               <Button variant="outline" className="flex items-center gap-2 flex-shrink-0 bg-gray-100 hover:bg-gray-200 border-0">
                 <Image src="/filter-outline.svg" alt="Menu" width={20} height={20} />
                 <span>Каталог</span>
@@ -117,7 +117,7 @@ function NavigationBarContent() {
         </div>
 
         {/* Mobile: Search */}
-        <div className="mb-3 md:hidden">
+        <div className="navigation-bar__mobile-search mb-3 md:hidden">
           <Search
             value={searchQuery}
             placeholder="Поиск"

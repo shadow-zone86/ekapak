@@ -34,19 +34,20 @@ export function Card({
   return (
     <div
       className={cn(
+        'card',
         'rounded-lg bg-white transition-shadow',
         {
           // Variants
-          'border-stroke': variant === 'default' || variant === 'outlined',
-          'shadow-sm': variant === 'default',
-          'shadow-md': variant === 'elevated',
+          'card--default border-stroke shadow-sm': variant === 'default',
+          'card--outlined border-stroke': variant === 'outlined',
+          'card--elevated shadow-md': variant === 'elevated',
           // Hover effect
           'hover:shadow-md': hover && variant === 'default',
           'hover:shadow-lg': hover && variant === 'elevated',
           // Sizes
-          'p-3': size === 'sm',
-          'p-4': size === 'md',
-          'p-6': size === 'lg',
+          'card--sm p-3': size === 'sm',
+          'card--md p-4': size === 'md',
+          'card--lg p-6': size === 'lg',
         },
         className
       )}
@@ -67,7 +68,7 @@ export function CardHeader({
 }: CardHeaderProps) {
   return (
     <div
-      className={cn('mb-4 border-b border-stroke pb-4 last:mb-0 last:border-b-0 last:pb-0', className)}
+      className={cn('card__header', 'mb-4 border-b border-stroke pb-4 last:mb-0 last:border-b-0 last:pb-0', className)}
       {...props}
     >
       {children}
@@ -84,7 +85,7 @@ export function CardBody({
   ...props
 }: CardBodyProps) {
   return (
-    <div className={cn('', className)} {...props}>
+    <div className={cn('card__body', className)} {...props}>
       {children}
     </div>
   );
@@ -100,7 +101,7 @@ export function CardFooter({
 }: CardFooterProps) {
   return (
     <div
-      className={cn('mt-4 border-t border-stroke pt-4 first:mt-0 first:border-t-0 first:pt-0', className)}
+      className={cn('card__footer', 'mt-4 border-t border-stroke pt-4 first:mt-0 first:border-t-0 first:pt-0', className)}
       {...props}
     >
       {children}

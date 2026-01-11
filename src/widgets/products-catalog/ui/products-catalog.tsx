@@ -10,6 +10,7 @@ import { FavoriteButton } from '@/features/toggle-favorite';
 import { Pagination } from '@/features/pagination';
 import { CategoryFilter } from '@/features/category-filter';
 import { ProductSort, sortProducts, type SortOption } from '@/features/product-sort';
+import { ScrollAnimateWrapper } from '@/shared/components/scroll-animate-wrapper/scroll-animate-wrapper';
 
 interface ProductsCatalogProps {
   initialPage: number;
@@ -20,7 +21,8 @@ interface ProductsCatalogProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function ProductsCatalog(_props: ProductsCatalogProps) {
   const searchParams = useSearchParams();
-  const page = parseInt(searchParams?.get('page') || '1', 10);
+  const pageParam = searchParams?.get('page');
+  const page = parseInt(pageParam || '1', 10);
   const categoryUuid = searchParams?.get('category') || undefined;
   const searchQuery = searchParams?.get('search') || '';
   const sortOption = (searchParams?.get('sort') || 'default') as SortOption;
@@ -53,27 +55,27 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
   const totalPages = searchQuery.trim() ? 1 : (meta?.last_page || 1);
 
   return (
-    <div className="flex flex-col gap-[10px] lg:flex-row">
+    <div className="products-catalog flex flex-col gap-[10px] lg:flex-row">
       <CategoryFilter />
 
-      <div className="flex-1">
-        <div className="mb-4 flex items-center justify-end">
+      <div className="products-catalog__content flex-1">
+        <div className="products-catalog__sort-wrapper mb-4 flex items-center justify-end">
           <ProductSort />
         </div>
         <>
           {isLoadingProducts ? (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="products-catalog__skeleton grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {[...Array(8)].map((_, i) => (
                 <div
                   key={i}
-                  className="h-80 animate-pulse rounded-lg bg-gray-200"
+                  className="products-catalog__skeleton-item h-80 animate-pulse rounded-lg bg-gray-200"
                 />
               ))}
             </div>
           ) : filteredAndSortedProducts.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                {filteredAndSortedProducts.map((product) => {
+              <div className="products-catalog__grid grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                {filteredAndSortedProducts.map((product, index) => {
                   const defaultOffer = product.defaultOffer;
                   if (!defaultOffer) {
                     return null;
@@ -82,12 +84,14 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
 
                   return (
                     <ProductQuantityProvider key={product.uuid} initialQuantity={initialQuantity}>
-                      <ProductCardView
-                        product={product}
-                        favoriteButton={<FavoriteButton productUuid={product.uuid} productName={product.name} />}
-                        quantityControls={<ProductQuantityControls defaultOffer={defaultOffer} />}
-                        addToCartButton={<AddToCartButton product={product} />}
-                      />
+                      <ScrollAnimateWrapper delay={(index % 10) * 50}>
+                        <ProductCardView
+                          product={product}
+                          favoriteButton={<FavoriteButton productUuid={product.uuid} productName={product.name} />}
+                          quantityControls={<ProductQuantityControls defaultOffer={defaultOffer} />}
+                          addToCartButton={<AddToCartButton product={product} />}
+                        />
+                      </ScrollAnimateWrapper>
                     </ProductQuantityProvider>
                   );
                 })}
@@ -97,7 +101,7 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
               )}
             </>
           ) : (
-            <div className="col-span-full py-12 text-center text-gray">
+            <div className="products-catalog__empty col-span-full py-12 text-center text-gray">
               Товары не найдены
             </div>
           )}

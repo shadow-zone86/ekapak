@@ -8,15 +8,21 @@ interface UsePaginationOptions {
   basePath?: string;
 }
 
-export function usePagination({ currentPage, totalPages, basePath = '/' }: UsePaginationOptions) {
+export function usePagination({ currentPage, totalPages }: UsePaginationOptions) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const handlePageChange = (newPage: number) => {
-    if (!searchParams) return;
-    const params = new URLSearchParams(searchParams.toString());
+    if (!searchParams) {
+      return;
+    }
+
+    const currentParamsString = searchParams.toString();
+    const params = new URLSearchParams(currentParamsString);
     params.set('page', newPage.toString());
-    router.push(`${basePath}?${params.toString()}`);
+
+    const newUrl = `/?${params.toString()}`;
+    router.replace(newUrl);
   };
 
   const goToPreviousPage = () => {

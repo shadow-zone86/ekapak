@@ -2,8 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
-
-export type SortOption = 'name-asc' | 'name-desc' | 'price-asc' | 'price-desc' | 'default';
+import type { SortOption } from '../model/types';
 
 export function useProductSort() {
   const router = useRouter();

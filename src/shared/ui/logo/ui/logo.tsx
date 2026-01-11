@@ -8,13 +8,13 @@ export interface LogoProps {
 
 export function Logo({ className }: LogoProps) {
   return (
-    <Link href="/" className={cn('flex items-center gap-2 flex-shrink-0', className)}>
+    <Link href="/" className={cn('logo', 'flex items-center gap-2 flex-shrink-0', className)}>
       <Image
         src="/logo.svg"
         alt="EKAPAK"
         width={153}
         height={19}
-        className="h-5 w-auto"
+        className="logo__image h-5 w-auto"
       />
     </Link>
   );

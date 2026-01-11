@@ -9,9 +9,9 @@ jest.mock('next/navigation', () => ({
 }));
 
 describe('usePagination', () => {
-  const mockPush = jest.fn();
+  const mockReplace = jest.fn();
   const mockRouter = {
-    push: mockPush,
+    replace: mockReplace,
   };
 
   beforeEach(() => {
@@ -108,26 +108,7 @@ describe('usePagination', () => {
         result.current.handlePageChange(3);
       });
 
-      expect(mockPush).toHaveBeenCalledWith('/?page=3&category=test');
-    });
-
-    it('should navigate to correct page with custom basePath', () => {
-      const mockSearchParams = new URLSearchParams('page=1&category=test');
-      (useSearchParams as jest.Mock).mockReturnValue(mockSearchParams);
-
-      const { result } = renderHook(() =>
-        usePagination({
-          currentPage: 1,
-          totalPages: 5,
-          basePath: '/products',
-        })
-      );
-
-      act(() => {
-        result.current.handlePageChange(3);
-      });
-
-      expect(mockPush).toHaveBeenCalledWith('/products?page=3&category=test');
+      expect(mockReplace).toHaveBeenCalledWith('/?page=3&category=test');
     });
 
     it('should preserve existing query parameters', () => {
@@ -145,7 +126,7 @@ describe('usePagination', () => {
         result.current.handlePageChange(2);
       });
 
-      expect(mockPush).toHaveBeenCalledWith('/?page=2&category=electronics&sort=price');
+      expect(mockReplace).toHaveBeenCalledWith('/?page=2&category=electronics&sort=price');
     });
 
     it('should not navigate if searchParams is null', () => {
@@ -162,7 +143,7 @@ describe('usePagination', () => {
         result.current.handlePageChange(2);
       });
 
-      expect(mockPush).not.toHaveBeenCalled();
+      expect(mockReplace).not.toHaveBeenCalled();
     });
   });
 
@@ -182,7 +163,7 @@ describe('usePagination', () => {
         result.current.goToPreviousPage();
       });
 
-      expect(mockPush).toHaveBeenCalledWith('/?page=2&category=test');
+      expect(mockReplace).toHaveBeenCalledWith('/?page=2&category=test');
     });
 
     it('should not navigate when on first page', () => {
@@ -200,7 +181,7 @@ describe('usePagination', () => {
         result.current.goToPreviousPage();
       });
 
-      expect(mockPush).not.toHaveBeenCalled();
+      expect(mockReplace).not.toHaveBeenCalled();
     });
   });
 
@@ -220,7 +201,7 @@ describe('usePagination', () => {
         result.current.goToNextPage();
       });
 
-      expect(mockPush).toHaveBeenCalledWith('/?page=4&category=test');
+      expect(mockReplace).toHaveBeenCalledWith('/?page=4&category=test');
     });
 
     it('should not navigate when on last page', () => {
@@ -238,7 +219,7 @@ describe('usePagination', () => {
         result.current.goToNextPage();
       });
 
-      expect(mockPush).not.toHaveBeenCalled();
+      expect(mockReplace).not.toHaveBeenCalled();
     });
   });
 
@@ -273,25 +254,7 @@ describe('usePagination', () => {
         result.current.handlePageChange(2);
       });
 
-      expect(mockPush).toHaveBeenCalledWith('/?page=2');
-    });
-
-    it('should use default basePath when not provided', () => {
-      const mockSearchParams = new URLSearchParams('page=1');
-      (useSearchParams as jest.Mock).mockReturnValue(mockSearchParams);
-
-      const { result } = renderHook(() =>
-        usePagination({
-          currentPage: 1,
-          totalPages: 5,
-        })
-      );
-
-      act(() => {
-        result.current.handlePageChange(2);
-      });
-
-      expect(mockPush).toHaveBeenCalledWith('/?page=2');
+      expect(mockReplace).toHaveBeenCalledWith('/?page=2');
     });
   });
 });

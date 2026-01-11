@@ -28,23 +28,23 @@ export function ProductCardView({
     <Card
       variant="default"
       size="sm"
-      className="group relative flex flex-col overflow-hidden p-0 h-full"
+      className="product-card-view group relative flex flex-col overflow-hidden p-0 h-full animate-fade-in hover:shadow-lg transition-smooth"
     >
       {/* Изображение продукта с иконкой избранного */}
-      <div className="relative w-full overflow-hidden" style={{ aspectRatio: '1 / 1', maxHeight: '200px' }}>
-        <Link href={`/product/${product.slug}`} className="absolute inset-0 z-0">
+      <div className="product-card-view__image-wrapper relative w-full overflow-hidden" style={{ aspectRatio: '1 / 1', maxHeight: '200px' }}>
+        <Link href={`/product/${product.slug}`} className="product-card-view__image-link absolute inset-0 z-0">
           <CardImage image={product.image} alt={product.name} />
         </Link>
         {/* Иконка избранного */}
         {favoriteButton && (
-          <div className="absolute top-1.5 right-1.5 z-10" onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
+          <div className="product-card-view__favorite-wrapper absolute top-1.5 right-1.5 z-10" onClick={(e) => e.stopPropagation()} onMouseDown={(e) => e.stopPropagation()}>
             {favoriteButton}
           </div>
         )}
       </div>
 
       {/* Информация о продукте */}
-      <div className="flex flex-1 flex-col p-3">
+      <div className="product-card-view__content flex flex-1 flex-col p-3">
         {/* Артикул */}
         {product.sku && (
           <Description className="mb-1.5 text-gray text-xs">
