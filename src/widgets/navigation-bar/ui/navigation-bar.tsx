@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAppDispatch, useAppSelector } from '@/shared/config/store-hooks';
@@ -12,12 +13,29 @@ import { Button } from '@/shared/ui/button';
 import { Search } from '@/shared/ui/search';
 import { Logo } from '@/shared/ui/logo';
 import { NavIcon } from '@/shared/ui/nav-icon';
+import { useProductSearchWithUrl } from '@/features/product-search/lib/useProductSearchWithUrl';
 
 export function NavigationBar() {
+  return (
+    <Suspense fallback={
+      <div className="h-16 bg-white border-b border-stroke">
+        <div className="container mx-auto px-4 py-3">
+          <div className="h-10 bg-gray-100 rounded animate-pulse" />
+        </div>
+      </div>
+    }>
+      <NavigationBarContent />
+    </Suspense>
+  );
+}
+
+function NavigationBarContent() {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
   const cartItemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
   const favoritesCount = useAppSelector((state) => state.favorites.productUuids.length);
+
+  const { searchQuery, handleSearchChange } = useProductSearchWithUrl();
 
   const formatBadge = (count: number): number | string | undefined => {
     if (count <= 0) return undefined;
@@ -58,7 +76,12 @@ export function NavigationBar() {
                   <span>Каталог</span>
                 </Button>
               </Link>
-              <Search placeholder="Поиск" className="flex-1 max-w-md" />
+              <Search
+                value={searchQuery}
+                placeholder="Поиск"
+                className="flex-1 max-w-md"
+                onSearch={handleSearchChange}
+              />
             </div>
 
             <div className="flex items-center justify-between gap-6">
@@ -80,7 +103,12 @@ export function NavigationBar() {
                 <span>Каталог</span>
               </Button>
             </Link>
-            <Search placeholder="Поиск" className="flex-1 max-w-md" />
+            <Search
+              value={searchQuery}
+              placeholder="Поиск"
+              className="flex-1 max-w-md"
+              onSearch={handleSearchChange}
+            />
             <NavIcon icon="/profile.svg" label="Профиль" href="#" className="ml-[34px]" />
             <NavIcon icon="/favorites.svg" label="Избранное" href="/favorites" badge={favoritesBadge} className="ml-[30px]" />
             <NavIcon icon="/cart.svg" label="Корзина" href="/cart" badge={cartBadge} className="ml-[30px]" />
@@ -90,7 +118,12 @@ export function NavigationBar() {
 
         {/* Mobile: Search */}
         <div className="mb-3 md:hidden">
-          <Search placeholder="Поиск" className="w-full" />
+          <Search
+            value={searchQuery}
+            placeholder="Поиск"
+            className="w-full"
+            onSearch={handleSearchChange}
+          />
         </div>
 
         {/* Mobile: Menu */}

@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useProducts } from '@/entities/product/api/useProducts';
 import { ProductCardView } from '@/entities/product/ui/product-card-view';
@@ -12,6 +13,7 @@ import { CategoryFilter } from '@/features/category-filter';
 interface ProductsCatalogProps {
   initialPage: number;
   initialCategory?: string;
+  searchQuery?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,6 +21,7 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams?.get('page') || '1', 10);
   const categoryUuid = searchParams?.get('category') || undefined;
+  const searchQuery = searchParams?.get('search') || '';
 
   // Entities: получение данных
   const { data: productsData, isLoading: isLoadingProducts } = useProducts(
@@ -27,9 +30,22 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
     categoryUuid
   );
 
-  const products = productsData?.data || [];
+  // Фильтрация продуктов по названию на фронте
+  const filteredProducts = useMemo(() => {
+    const allProducts = productsData?.data || [];
+
+    if (!searchQuery.trim()) {
+      return allProducts;
+    }
+
+    const query = searchQuery.toLowerCase().trim();
+    return allProducts.filter((product) =>
+      product.name.toLowerCase().includes(query)
+    );
+  }, [productsData?.data, searchQuery]);
+
   const meta = productsData?.meta;
-  const totalPages = meta?.last_page || 1;
+  const totalPages = searchQuery.trim() ? 1 : (meta?.last_page || 1);
 
   return (
     <div className="flex flex-col gap-[10px] lg:flex-row">
@@ -46,10 +62,10 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
                 />
               ))}
             </div>
-          ) : products.length > 0 ? (
+          ) : filteredProducts.length > 0 ? (
             <>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                {products.map((product) => {
+                {filteredProducts.map((product) => {
                   const defaultOffer = product.defaultOffer;
                   if (!defaultOffer) {
                     return null;
@@ -68,7 +84,9 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
                   );
                 })}
               </div>
-              <Pagination currentPage={page} totalPages={totalPages} basePath="/" />
+              {!searchQuery.trim() && totalPages > 1 && (
+                <Pagination currentPage={page} totalPages={totalPages} basePath="/" />
+              )}
             </>
           ) : (
             <div className="col-span-full py-12 text-center text-gray">
