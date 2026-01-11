@@ -59,11 +59,13 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // Компонент-обертка для Default story
-function DefaultNotification(args: typeof meta.args) {
+function DefaultNotification(args: typeof meta.args = {}) {
   const [isVisible, setIsVisible] = useState(true);
   if (!isVisible) return <div>Уведомление закрыто</div>;
   return (
     <Notification
+      id={args.id || 'notification-1'}
+      message={args.message || 'Это базовое уведомление с возможностью закрытия'}
       {...args}
       onClose={(id) => {
         console.log('Закрыто:', id);
@@ -83,11 +85,13 @@ export const Default: Story = {
 };
 
 // Компонент-обертка для Info story
-function InfoNotification(args: typeof meta.args) {
+function InfoNotification(args: typeof meta.args = {}) {
   const [isVisible, setIsVisible] = useState(true);
   if (!isVisible) return <div>Уведомление закрыто</div>;
   return (
     <Notification
+      id={args.id || 'info-1'}
+      message={args.message || 'Информационное сообщение для пользователя'}
       {...args}
       onClose={() => setIsVisible(false)}
     />
@@ -105,11 +109,13 @@ export const Info: Story = {
 };
 
 // Компонент-обертка для Success story
-function SuccessNotification(args: typeof meta.args) {
+function SuccessNotification(args: typeof meta.args = {}) {
   const [isVisible, setIsVisible] = useState(true);
   if (!isVisible) return <div>Уведомление закрыто</div>;
   return (
     <Notification
+      id={args.id || 'success-1'}
+      message={args.message || 'Операция выполнена успешно! Все данные сохранены.'}
       {...args}
       onClose={() => setIsVisible(false)}
     />
@@ -127,11 +133,13 @@ export const Success: Story = {
 };
 
 // Компонент-обертка для Warning story
-function WarningNotification(args: typeof meta.args) {
+function WarningNotification(args: typeof meta.args = {}) {
   const [isVisible, setIsVisible] = useState(true);
   if (!isVisible) return <div>Уведомление закрыто</div>;
   return (
     <Notification
+      id={args.id || 'warning-1'}
+      message={args.message || 'Обратите внимание на это сообщение. Проверьте введенные данные.'}
       {...args}
       onClose={() => setIsVisible(false)}
     />
@@ -149,11 +157,13 @@ export const Warning: Story = {
 };
 
 // Компонент-обертка для Error story
-function ErrorNotification(args: typeof meta.args) {
+function ErrorNotification(args: typeof meta.args = {}) {
   const [isVisible, setIsVisible] = useState(true);
   if (!isVisible) return <div>Уведомление закрыто</div>;
   return (
     <Notification
+      id={args.id || 'error-1'}
+      message={args.message || 'Произошла ошибка при выполнении операции. Попробуйте еще раз.'}
       {...args}
       onClose={() => setIsVisible(false)}
     />
@@ -171,11 +181,13 @@ export const Error: Story = {
 };
 
 // Компонент-обертка для WithoutTitle story
-function WithoutTitleNotification(args: typeof meta.args) {
+function WithoutTitleNotification(args: typeof meta.args = {}) {
   const [isVisible, setIsVisible] = useState(true);
   if (!isVisible) return <div>Уведомление закрыто</div>;
   return (
     <Notification
+      id={args.id || 'notification-1'}
+      message={args.message || 'Уведомление без заголовка с длинным текстом сообщения, которое может занимать несколько строк.'}
       {...args}
       onClose={() => setIsVisible(false)}
     />
@@ -192,11 +204,13 @@ export const WithoutTitle: Story = {
 };
 
 // Компонент-обертка для LongMessage story
-function LongMessageNotification(args: typeof meta.args) {
+function LongMessageNotification(args: typeof meta.args = {}) {
   const [isVisible, setIsVisible] = useState(true);
   if (!isVisible) return <div>Уведомление закрыто</div>;
   return (
     <Notification
+      id={args.id || 'notification-1'}
+      message={args.message || 'Это уведомление содержит очень длинный текст, который демонстрирует, как компонент обрабатывает многострочные сообщения. Текст может быть достаточно объемным и должен корректно отображаться с переносом строк.'}
       {...args}
       onClose={() => setIsVisible(false)}
     />
@@ -214,11 +228,13 @@ export const LongMessage: Story = {
 };
 
 // Компонент-обертка для NoAutoClose story
-function NoAutoCloseNotification(args: typeof meta.args) {
+function NoAutoCloseNotification(args: typeof meta.args = {}) {
   const [isVisible, setIsVisible] = useState(true);
   if (!isVisible) return <div>Уведомление закрыто</div>;
   return (
     <Notification
+      id={args.id || 'notification-1'}
+      message={args.message || 'Это уведомление не закроется автоматически'}
       {...args}
       onClose={() => setIsVisible(false)}
     />
@@ -237,11 +253,13 @@ export const NoAutoClose: Story = {
 };
 
 // Компонент-обертка для QuickAutoClose story
-function QuickAutoCloseNotification(args: typeof meta.args) {
+function QuickAutoCloseNotification(args: typeof meta.args = {}) {
   const [isVisible, setIsVisible] = useState(true);
   if (!isVisible) return <div>Уведомление закрыто</div>;
   return (
     <Notification
+      id={args.id || 'notification-1'}
+      message={args.message || 'Это уведомление закроется через 3 секунды'}
       {...args}
       onClose={() => setIsVisible(false)}
     />
@@ -259,11 +277,13 @@ export const QuickAutoClose: Story = {
 };
 
 // Компонент-обертка для NoCloseButton story
-function NoCloseButtonNotification(args: typeof meta.args) {
+function NoCloseButtonNotification(args: typeof meta.args = {}) {
   const [isVisible, setIsVisible] = useState(true);
   if (!isVisible) return <div>Уведомление закрыто</div>;
   return (
     <Notification
+      id={args.id || 'notification-1'}
+      message={args.message || 'Это уведомление можно закрыть только автоматически'}
       {...args}
       onClose={() => setIsVisible(false)}
     />
