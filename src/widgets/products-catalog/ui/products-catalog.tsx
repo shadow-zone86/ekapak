@@ -10,6 +10,7 @@ import { FavoriteButton } from '@/features/toggle-favorite';
 import { Pagination } from '@/features/pagination';
 import { CategoryFilter } from '@/features/category-filter';
 import { ProductSort, sortProducts, type SortOption } from '@/features/product-sort';
+import { ScrollAnimateWrapper } from '@/shared/components/scroll-animate-wrapper/scroll-animate-wrapper';
 
 interface ProductsCatalogProps {
   initialPage: number;
@@ -20,7 +21,8 @@ interface ProductsCatalogProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function ProductsCatalog(_props: ProductsCatalogProps) {
   const searchParams = useSearchParams();
-  const page = parseInt(searchParams?.get('page') || '1', 10);
+  const pageParam = searchParams?.get('page');
+  const page = parseInt(pageParam || '1', 10);
   const categoryUuid = searchParams?.get('category') || undefined;
   const searchQuery = searchParams?.get('search') || '';
   const sortOption = (searchParams?.get('sort') || 'default') as SortOption;
@@ -73,7 +75,7 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
           ) : filteredAndSortedProducts.length > 0 ? (
             <>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                {filteredAndSortedProducts.map((product) => {
+                {filteredAndSortedProducts.map((product, index) => {
                   const defaultOffer = product.defaultOffer;
                   if (!defaultOffer) {
                     return null;
@@ -82,12 +84,14 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
 
                   return (
                     <ProductQuantityProvider key={product.uuid} initialQuantity={initialQuantity}>
-                      <ProductCardView
-                        product={product}
-                        favoriteButton={<FavoriteButton productUuid={product.uuid} productName={product.name} />}
-                        quantityControls={<ProductQuantityControls defaultOffer={defaultOffer} />}
-                        addToCartButton={<AddToCartButton product={product} />}
-                      />
+                      <ScrollAnimateWrapper delay={(index % 10) * 50}>
+                        <ProductCardView
+                          product={product}
+                          favoriteButton={<FavoriteButton productUuid={product.uuid} productName={product.name} />}
+                          quantityControls={<ProductQuantityControls defaultOffer={defaultOffer} />}
+                          addToCartButton={<AddToCartButton product={product} />}
+                        />
+                      </ScrollAnimateWrapper>
                     </ProductQuantityProvider>
                   );
                 })}

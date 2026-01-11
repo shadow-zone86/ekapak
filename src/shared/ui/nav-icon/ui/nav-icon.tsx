@@ -35,7 +35,7 @@ export function NavIcon({
   );
 
   const baseClasses =
-    'flex flex-col items-center gap-1 hover:opacity-70 transition-opacity relative cursor-pointer';
+    'flex flex-col items-center gap-1 hover:opacity-70 transition-smooth relative cursor-pointer active:scale-95';
 
   if (href) {
     return (

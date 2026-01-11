@@ -66,18 +66,21 @@ export function ProductSort() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 rounded-lg border border-stroke bg-white shadow-lg z-50">
+        <div className="absolute right-0 mt-2 w-56 rounded-lg border border-stroke bg-white shadow-lg z-50 animate-scale-in">
           <div className="py-1">
-            {sortOptions.map((option) => (
+            {sortOptions.map((option, index) => (
               <button
                 key={option.value}
                 type="button"
                 onClick={() => handleSelect(option.value)}
                 className={cn(
-                  'w-full text-left px-4 py-2 text-sm transition-colors',
+                  'w-full text-left px-4 py-2 text-sm transition-smooth',
                   'hover:bg-gray-100 focus:outline-none focus:bg-gray-100',
                   selectedSort === option.value && 'bg-blue-50 text-blue-600 font-medium'
                 )}
+                style={{
+                  animation: `slideInUp 0.2s ease-out ${index * 0.03}s both`
+                }}
               >
                 {option.label}
               </button>

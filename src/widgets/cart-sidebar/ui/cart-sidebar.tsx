@@ -24,16 +24,16 @@ export function CartSidebar() {
   return (
     <>
       <div
-        className="fixed inset-0 bg-black/50 z-40"
+        className="fixed inset-0 bg-black/50 z-40 animate-fade-in"
         onClick={() => dispatch(closeCart())}
       />
-      <aside className="fixed right-0 top-0 z-50 h-full w-full max-w-md bg-white shadow-xl overflow-y-auto">
+      <aside className="fixed right-0 top-0 z-50 h-full w-full max-w-md bg-white shadow-xl overflow-y-auto animate-slide-in-down">
         <div className="flex h-full flex-col">
           <div className="flex items-center justify-between border-b border-stroke p-4">
             <H2 className="text-black">Корзина</H2>
             <button
               onClick={() => dispatch(closeCart())}
-              className="text-gray hover:text-black"
+              className="text-gray hover:text-black transition-smooth active:scale-95"
             >
               ✕
             </button>
@@ -49,7 +49,7 @@ export function CartSidebar() {
                 {items.map((item) => (
                   <li
                     key={item.id}
-                    className="flex gap-4 rounded-lg border border-stroke p-4"
+                    className="flex gap-4 rounded-lg border border-stroke p-4 animate-fade-in hover:shadow-sm transition-smooth"
                   >
                     {item.productImage ? (
                       <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded bg-background">
@@ -83,7 +83,7 @@ export function CartSidebar() {
                               })
                             )
                           }
-                          className="h-6 w-6 rounded border border-stroke text-black hover:bg-background"
+                          className="h-6 w-6 rounded border border-stroke text-black hover:bg-background transition-smooth active:scale-95"
                         >
                           −
                         </button>
@@ -99,7 +99,7 @@ export function CartSidebar() {
                               })
                             )
                           }
-                          className="h-6 w-6 rounded border border-stroke text-black hover:bg-background"
+                          className="h-6 w-6 rounded border border-stroke text-black hover:bg-background transition-smooth active:scale-95"
                         >
                           +
                         </button>
@@ -115,7 +115,7 @@ export function CartSidebar() {
                         </Price>
                         <button
                           onClick={() => dispatch(removeItem(item.id))}
-                          className="text-red-500 hover:text-red-700"
+                          className="text-red-500 hover:text-red-700 transition-smooth active:scale-95"
                         >
                           🗑️
                         </button>

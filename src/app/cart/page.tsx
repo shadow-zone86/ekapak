@@ -15,7 +15,7 @@ export default function CartPageRoute() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background animate-page-fade-in">
         <div className="container mx-auto px-4 pt-5">
           <header className="bg-white border-stroke rounded-lg overflow-hidden mb-5">
             <ContactBar />
@@ -32,7 +32,7 @@ export default function CartPageRoute() {
 
   if (isError) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background animate-page-fade-in">
         <div className="container mx-auto px-4 pt-5">
           <header className="bg-white border-stroke rounded-lg overflow-hidden mb-5">
             <ContactBar />
@@ -50,7 +50,7 @@ export default function CartPageRoute() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background animate-page-fade-in">
       <div className="container mx-auto px-4 pt-5">
         <header className="bg-white border-stroke rounded-lg overflow-hidden mb-5">
           <ContactBar />
