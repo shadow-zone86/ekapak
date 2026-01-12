@@ -3,23 +3,18 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAppSelector } from '@/shared/config/store-hooks';
-import { useMobileMenuContext } from '@/shared/lib/hooks';
+import { useMobileMenuContext, useFormatBadge } from '@/shared/lib/hooks';
 import { Button } from '@/shared/ui/button';
 import { PText } from '@/shared/ui/typography';
 
 export function MobileMenu() {
   const cartItems = useAppSelector((state) => state.cart.items);
-  const cartItemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const cartItemsCount = cartItems.length;
   const favoritesCount = useAppSelector((state) => state.favorites.productUuids.length);
   const { isOpen, close } = useMobileMenuContext();
 
-  const formatBadge = (count: number): number | string | undefined => {
-    if (count <= 0) return undefined;
-    return count > 99 ? '99+' : count;
-  };
-
-  const favoritesBadge = formatBadge(favoritesCount);
-  const cartBadge = formatBadge(cartItemsCount);
+  const favoritesBadge = useFormatBadge(favoritesCount);
+  const cartBadge = useFormatBadge(cartItemsCount);
 
   if (!isOpen) return null;
 

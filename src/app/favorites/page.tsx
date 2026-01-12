@@ -4,6 +4,7 @@ import { CartSidebar } from '@/widgets/cart-sidebar';
 import { FavoritesCatalog } from '@/widgets/favorites-catalog';
 import { ContactBar } from '@/widgets/contact-bar';
 import { NavigationBar } from '@/widgets/navigation-bar';
+import { FavoritesPageHeader } from './favorites-page-header';
 
 export const metadata: Metadata = {
   title: 'Избранное - EKAPAK | Интернет-магазин гибкой пластиковой упаковки',
@@ -26,6 +27,7 @@ export default function FavoritesPage() {
         </header>
       </div>
       <main className="container mx-auto px-4 pb-8">
+        <FavoritesPageHeader />
         <Suspense fallback={<div className="text-center py-12">Загрузка...</div>}>
           <FavoritesCatalog />
         </Suspense>
