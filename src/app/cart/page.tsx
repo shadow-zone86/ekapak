@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { CartSidebar } from '@/widgets/cart-sidebar';
 import { ContactBar } from '@/widgets/contact-bar';
 import { NavigationBar } from '@/widgets/navigation-bar';
@@ -8,6 +9,7 @@ import { useCartProducts } from '@/entities/product/api/useCartProducts';
 import { H1, PText } from '@/shared/ui/typography';
 import { CartItem } from '@/widgets/cart-item';
 import { OrderSummary } from '@/widgets/order-summary';
+import { Breadcrumbs } from '@/shared/ui/breadcrumbs';
 
 export default function CartPageRoute() {
   const cartItems = useAppSelector((state) => state.cart.items);
@@ -22,9 +24,9 @@ export default function CartPageRoute() {
             <NavigationBar />
           </header>
         </div>
-        <div className="container mx-auto px-4 pb-8">
-          <div className="text-center py-12">Загрузка товаров корзины...</div>
-        </div>
+      <div className="container mx-auto px-4 pb-8">
+        <div className="text-center py-12">Загрузка товаров корзины...</div>
+      </div>
         <CartSidebar />
       </div>
     );
@@ -39,11 +41,11 @@ export default function CartPageRoute() {
             <NavigationBar />
           </header>
         </div>
-        <div className="container mx-auto px-4 pb-8">
-          <div className="text-center py-12 text-red-600">
-            Ошибка загрузки товаров корзины: {errors.map(e => e?.message || String(e)).join(', ')}
-          </div>
+      <div className="container mx-auto px-4 pb-8">
+        <div className="text-center py-12 text-red-600">
+          Ошибка загрузки товаров корзины: {errors.map(e => e?.message || String(e)).join(', ')}
         </div>
+      </div>
         <CartSidebar />
       </div>
     );
@@ -58,7 +60,39 @@ export default function CartPageRoute() {
         </header>
       </div>
       <div className="container mx-auto px-4 pb-8">
-        <H1 className="mb-6 text-2xl font-bold">Корзина</H1>
+        {cartItems.length > 0 && (
+          <>
+            {/* Хлебные крошки */}
+            <Breadcrumbs
+              items={[
+                { label: 'Главная', href: '/' },
+                { label: 'Корзина', active: true },
+              ]}
+              className="mb-4"
+            />
+
+            {/* Заголовок страницы с кнопкой возврата */}
+            <div className="cart-page-header mb-6 grid grid-cols-1 items-center gap-4 md:grid-cols-[auto_1fr_auto]">
+              <Link
+                href="/"
+                className="back-button hidden items-center gap-2 rounded-lg border border-stroke bg-white px-4 py-2 text-gray-700 text-sm transition-smooth hover:bg-gray-50 hover:shadow-sm active:scale-[0.98] md:inline-flex"
+              >
+                <svg
+                  className="back-button__icon h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span className="back-button__text">Вернуться к покупкам</span>
+              </Link>
+              <H1 className="cart-page-header__title text-center text-2xl font-bold">Корзина</H1>
+              <div className="hidden md:block"></div>
+            </div>
+          </>
+        )}
         {cartItems.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <div className="mb-4">

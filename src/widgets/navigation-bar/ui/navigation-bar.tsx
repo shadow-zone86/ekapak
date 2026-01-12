@@ -3,8 +3,8 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useAppDispatch, useAppSelector } from '@/shared/config/store-hooks';
-import { openCart } from '@/entities/cart/model/cartState';
+import { useAppSelector } from '@/shared/config/store-hooks';
+import { useFormatBadge } from '@/shared/lib/hooks';
 import { MobileMenuProvider } from '@/features/mobile-menu-provider';
 import { MobileMenuButton } from '@/features/mobile-menu-button';
 import { MobileMenu } from '@/features/mobile-menu';
@@ -30,20 +30,14 @@ export function NavigationBar() {
 }
 
 function NavigationBarContent() {
-  const dispatch = useAppDispatch();
   const cartItems = useAppSelector((state) => state.cart.items);
-  const cartItemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const cartItemsCount = cartItems.length;
   const favoritesCount = useAppSelector((state) => state.favorites.productUuids.length);
 
   const { searchQuery, handleSearchChange } = useProductSearchWithUrl();
 
-  const formatBadge = (count: number): number | string | undefined => {
-    if (count <= 0) return undefined;
-    return count > 99 ? '99+' : count;
-  };
-
-  const favoritesBadge = formatBadge(favoritesCount);
-  const cartBadge = formatBadge(cartItemsCount);
+  const favoritesBadge = useFormatBadge(favoritesCount);
+  const cartBadge = useFormatBadge(cartItemsCount);
 
   return (
     <MobileMenuProvider>
@@ -66,11 +60,11 @@ function NavigationBarContent() {
 
         {/* Desktop: Main navigation */}
         <div className="navigation-bar__desktop hidden md:block">
-          {/* До 1023px - две строки */}
-          <div className="navigation-bar__desktop-compact flex flex-col gap-3 max-[1023px]:flex min-[1024px]:hidden">
-            <div className="navigation-bar__desktop-compact-row flex items-center gap-4">
+          <div className="navigation-bar__desktop-container flex flex-col gap-3 min-[1024px]:flex-row min-[1024px]:items-center min-[1024px]:justify-between min-[1024px]:gap-0">
+            {/* Левая группа: Logo, Каталог, Поиск */}
+            <div className="navigation-bar__desktop-left flex items-center gap-4 min-[1024px]:gap-[30px] flex-1 min-[1024px]:flex-initial">
               <Logo />
-              <Link href="/">
+              <Link href="/" className="navigation-bar__catalog-link">
                 <Button variant="outline" className="flex items-center gap-2 flex-shrink-0 bg-gray-100 hover:bg-gray-200 border-0">
                   <Image src="/filter-outline.svg" alt="Menu" width={20} height={20} />
                   <span>Каталог</span>
@@ -84,35 +78,16 @@ function NavigationBarContent() {
               />
             </div>
 
-            <div className="navigation-bar__desktop-compact-actions flex items-center justify-between gap-6">
-              <div className="navigation-bar__desktop-compact-icons flex items-center gap-6 flex-shrink-0">
+            {/* Правая группа: Профиль, Избранное, Корзина, Заказать образец */}
+            <div className="navigation-bar__desktop-right flex items-center justify-between gap-6 min-[1024px]:justify-end min-[1024px]:gap-[30px] flex-shrink-0">
+              {/* Иконки - обернуты только для планшета, чтобы justify-between работал */}
+              <div className="navigation-bar__desktop-icons flex items-center gap-6 min-[1024px]:contents flex-shrink-0">
                 <NavIcon icon="/profile.svg" label="Профиль" href="#" />
                 <NavIcon icon="/favorites.svg" label="Избранное" href="/favorites" badge={favoritesBadge} />
-                <NavIcon icon="/cart.svg" label="Корзина" onClick={() => dispatch(openCart())} badge={cartBadge} />
+                <NavIcon icon="/cart.svg" label="Корзина" href="/cart" badge={cartBadge} />
               </div>
               <Button variant="primary" className="flex-shrink-0">Заказать образец</Button>
             </div>
-          </div>
-
-          {/* От 1024px - одна строка */}
-          <div className="navigation-bar__desktop-full hidden min-[1024px]:flex items-center w-full">
-            <Logo />
-            <Link href="/" className="navigation-bar__catalog-link ml-[30px] mr-[10px]">
-              <Button variant="outline" className="flex items-center gap-2 flex-shrink-0 bg-gray-100 hover:bg-gray-200 border-0">
-                <Image src="/filter-outline.svg" alt="Menu" width={20} height={20} />
-                <span>Каталог</span>
-              </Button>
-            </Link>
-            <Search
-              value={searchQuery}
-              placeholder="Поиск"
-              className="flex-1 max-w-md"
-              onSearch={handleSearchChange}
-            />
-            <NavIcon icon="/profile.svg" label="Профиль" href="#" className="ml-[34px]" />
-            <NavIcon icon="/favorites.svg" label="Избранное" href="/favorites" badge={favoritesBadge} className="ml-[30px]" />
-            <NavIcon icon="/cart.svg" label="Корзина" href="/cart" badge={cartBadge} className="ml-[30px]" />
-            <Button variant="primary" className="flex-shrink-0 ml-[30px]">Заказать образец</Button>
           </div>
         </div>
 

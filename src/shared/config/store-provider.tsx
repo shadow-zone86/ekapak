@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { Provider } from 'react-redux';
-import { makeStore, AppStore } from './store';
+import { makeStore, AppStore } from '@/app/providers/store';
 
 let store: AppStore | undefined;
 

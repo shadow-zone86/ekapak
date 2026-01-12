@@ -1,12 +1,15 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
 import { useAppSelector } from '@/shared/config/store-hooks';
 import { Button } from '@/shared/ui/button';
-import { H2, PText, Price, Description } from '@/shared/ui/typography';
-import { Tooltip } from '@/shared/ui/tooltip';
+import { H2 } from '@/shared/ui/typography';
 import { useState } from 'react';
+import { CartDiscountInfo } from '@/entities/cart/ui/cart-discount-info';
+import { CartUrgentOrder } from '@/entities/cart/ui/cart-urgent-order';
+import { CartItemsSummary } from '@/entities/cart/ui/cart-items-summary';
+import { CartDiscount } from '@/entities/cart/ui/cart-discount';
+import { CartTotal } from '@/entities/cart/ui/cart-total';
+import { CartTerms } from '@/entities/cart/ui/cart-terms';
 
 export function OrderSummary() {
   const cartItems = useAppSelector((state) => state.cart.items);
@@ -24,99 +27,51 @@ export function OrderSummary() {
   const [isUrgent, setIsUrgent] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
-  const currencySymbol = cartItems[0]?.currency === 'RUB' ? '₽' : cartItems[0]?.currency || '';
+  const currencySymbol = cartItems[0]?.currency.trim().toUpperCase() === 'RUB' ? '₽' : cartItems[0]?.currency || '';
 
   return (
     <div className="order-summary rounded-lg border border-stroke bg-white p-6 shadow-sm">
+      {/* Заголовок */}
+      <H2 className="order-summary__title mb-4 text-black text-xl font-bold">Ваш заказ</H2>
+
       {/* До скидки 5% */}
-      <div className="order-summary__discount-info mb-4 flex items-center justify-between rounded-lg bg-blue-50 p-3">
-        <div className="order-summary__discount-label flex items-center gap-2">
-          <Image src="/percent.svg" alt="Скидка" width={20} height={20} className="order-summary__discount-icon" />
-          <PText className="text-blue-700">До скидки 5%</PText>
-        </div>
-        <Description className="order-summary__discount-amount text-blue-700">Осталось 3250 {currencySymbol}</Description>
+      <div className="order-summary__discount-info mb-4">
+        <CartDiscountInfo discountPercent={5} remainingAmount={3250} currencySymbol={currencySymbol} />
       </div>
 
       {/* Срочный заказ */}
-      <div className="order-summary__urgent mb-4 flex items-center justify-between">
-        <div className="order-summary__urgent-label flex items-center gap-2">
-          <PText className="text-black">Срочный заказ:</PText>
-          <Tooltip text="Срочный заказ может быть выполнен быстрее, но может повлечь дополнительные расходы.">
-            <Image
-              src="/question.svg"
-              alt="Информация о срочном заказе"
-              width={13}
-              height={13}
-              className="order-summary__urgent-hint cursor-pointer"
-            />
-          </Tooltip>
-        </div>
-        <label className="order-summary__urgent-toggle relative inline-flex cursor-pointer items-center">
-          <input
-            type="checkbox"
-            value=""
-            className="peer sr-only"
-            checked={isUrgent}
-            onChange={() => setIsUrgent(!isUrgent)}
-          />
-          <div className="order-summary__urgent-toggle-slider peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:start-[2px] after:top-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-blue-800 rtl:peer-checked:after:-translate-x-full"></div>
-        </label>
+      <div className="order-summary__urgent mb-4">
+        <CartUrgentOrder isUrgent={isUrgent} onUrgentChange={setIsUrgent} />
       </div>
 
       {/* Итоги по товарам */}
-      <div className="order-summary__items-summary mb-4 border-t border-stroke pt-4">
-        <div className="order-summary__items-summary-row flex items-center justify-between">
-          <PText className="order-summary__items-count text-black">{totalQuantity} товара</PText>
-          <Price className="order-summary__items-total text-black">
-            {subtotal.toFixed(2)} {currencySymbol}
-          </Price>
-        </div>
-        <Description className="order-summary__items-dimensions text-gray-600">
-          ({totalVolume.toFixed(4)} м³ / {totalWeight.toFixed(2)} кг)
-        </Description>
+      <div className="order-summary__items-summary mb-4">
+        <CartItemsSummary
+          totalQuantity={totalQuantity}
+          subtotal={subtotal}
+          totalVolume={totalVolume}
+          totalWeight={totalWeight}
+          currencySymbol={currencySymbol}
+        />
       </div>
 
-      {/* Общая скидка */}
-      <div className="order-summary__discount mb-4 flex items-center justify-between">
-        <div className="order-summary__discount-label-wrapper flex items-center gap-2">
-          <PText className="text-black">Общая скидка:</PText>
-          <Link href="#" className="order-summary__discount-link text-blue-600 text-sm hover:underline">
-            Подробнее
-          </Link>
-        </div>
-        <Price className="order-summary__discount-value text-blue-600">
-          -{totalDiscount.toFixed(2)} {currencySymbol}
-        </Price>
-      </div>
+            {/* Общая скидка */}
+            <div className="order-summary__discount mb-4">
+              <CartDiscount />
+            </div>
 
-      {/* Всего */}
-      <div className="order-summary__total mb-6 border-t border-stroke pt-4">
-        <div className="order-summary__total-row flex items-center justify-between">
-          <H2 className="order-summary__total-label text-black">Всего:</H2>
-          <Price className="order-summary__total-value text-blue-600 text-2xl">
-            {finalTotal.toFixed(2)} {currencySymbol}
-          </Price>
-        </div>
-        <Description className="order-summary__total-vat text-gray-600">
-          В том числе НДС 20%
-        </Description>
-      </div>
+            {/* Всего */}
+            <div className="order-summary__total mb-6">
+              <CartTotal
+                finalTotal={finalTotal}
+                currencySymbol={currencySymbol}
+                vatPercent={20}
+              />
+            </div>
 
       {/* Чекбокс согласия */}
-      <div className="order-summary__terms mb-6 flex items-start">
-        <input
-          id="terms-checkbox"
-          type="checkbox"
-          className="order-summary__terms-checkbox mt-1 h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
-          checked={agreedToTerms}
-          onChange={() => setAgreedToTerms(!agreedToTerms)}
-        />
-        <label htmlFor="terms-checkbox" className="order-summary__terms-label ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-          Я согласен на обработку персональных данных в соответствии с{' '}
-          <Link href="#" className="order-summary__terms-link text-blue-600 hover:underline">
-            политикой обработки персональных данных компании
-          </Link>
-        </label>
+      <div className="order-summary__terms mb-6">
+        <CartTerms agreedToTerms={agreedToTerms} onTermsChange={setAgreedToTerms} />
       </div>
 
       {/* Кнопка оформления заказа */}

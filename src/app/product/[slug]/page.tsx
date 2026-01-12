@@ -4,6 +4,7 @@ import { ProductCard } from '@/widgets/product-card';
 import { CartSidebar } from '@/widgets/cart-sidebar';
 import { ContactBar } from '@/widgets/contact-bar';
 import { NavigationBar } from '@/widgets/navigation-bar';
+import { ProductPageHeader } from './product-page-header';
 import { resolveOr } from '@/shared/lib/di/container';
 import { PRODUCT_TOKENS } from '@/entities/product/api/tokens';
 import GetProductBySlugService from '@/entities/product/api/getProductBySlugService';
@@ -81,6 +82,7 @@ export default async function ProductPageRoute({ params }: ProductPageRouteProps
         </div>
         <main className="container mx-auto px-4 pb-8">
           <Suspense fallback={<div className="text-center py-12">Загрузка товара...</div>}>
+            <ProductPageHeader slug={resolvedParams.slug} />
             <ProductCard slug={resolvedParams.slug} />
           </Suspense>
         </main>
