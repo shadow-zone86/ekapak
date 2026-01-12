@@ -3,6 +3,7 @@ import { Card } from '@/shared/ui/card';
 import { H2, H3, Description } from '@/shared/ui/typography';
 import { PromoBannerProps } from '../model/types';
 import { defaultPromoBannerProps } from '../config/defaults';
+import { ScrollAnimateWrapper } from '@/shared/components/scroll-animate-wrapper';
 
 export function PromoBanner({
   headline = defaultPromoBannerProps.headline,
@@ -11,7 +12,8 @@ export function PromoBanner({
   iconAlt = defaultPromoBannerProps.iconAlt,
 }: PromoBannerProps) {
   return (
-    <Card className="promo-banner bg-white rounded-lg p-4 md:p-6 mt-[50px]">
+    <ScrollAnimateWrapper>
+      <Card className="promo-banner bg-white rounded-lg p-4 md:p-6 mt-[50px]">
       <div className="promo-banner__container flex items-center justify-between gap-3 md:gap-6">
         {/* Text content */}
         <div className="promo-banner__content flex-1">
@@ -43,5 +45,6 @@ export function PromoBanner({
         )}
       </div>
     </Card>
+    </ScrollAnimateWrapper>
   );
 }
