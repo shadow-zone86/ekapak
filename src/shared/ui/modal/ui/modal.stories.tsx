@@ -61,27 +61,58 @@ function ModalWrapper({ isOpen: initialIsOpen, ...args }: ModalWrapperProps) {
   );
 }
 
-export const Default: Story = {
+export const Default = {
+  args: {
+    isOpen: false,
+    children: <PText>Содержимое модального окна</PText>,
+  },
   render: (args) => <ModalWrapper {...args} isOpen={false} />,
-};
+} satisfies Story;
 
-export const Open: Story = {
+export const Open = {
+  args: {
+    isOpen: true,
+    children: <PText>Это модальное окно открыто по умолчанию.</PText>,
+  },
   render: (args) => (
     <Modal {...args} isOpen={true} title="Модальное окно открыто">
       <PText>Это модальное окно открыто по умолчанию.</PText>
     </Modal>
   ),
-};
+} satisfies Story;
 
-export const WithoutTitle: Story = {
+export const WithoutTitle = {
+  args: {
+    isOpen: true,
+    children: <PText>Это модальное окно без заголовка. Вы можете закрыть его, нажав Escape или кликнув вне окна.</PText>,
+  },
   render: (args) => (
     <Modal {...args} isOpen={true}>
       <PText>Это модальное окно без заголовка. Вы можете закрыть его, нажав Escape или кликнув вне окна.</PText>
     </Modal>
   ),
-};
+} satisfies Story;
 
-export const WithForm: Story = {
+export const WithForm = {
+  args: {
+    isOpen: true,
+    children: (
+      <div className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">Имя</label>
+          <input
+            type="text"
+            className="w-full rounded-lg border border-stroke px-4 py-2"
+            placeholder="Введите имя"
+          />
+        </div>
+        <div className="flex gap-3 justify-end">
+          <Button variant="outline">Отмена</Button>
+          <Button variant="primary">Сохранить</Button>
+        </div>
+      </div>
+    ),
+  },
   render: (args) => (
     <Modal {...args} isOpen={true} title="Форма">
       <div className="space-y-4">
@@ -104,12 +135,16 @@ export const WithForm: Story = {
       </div>
     </Modal>
   ),
-};
+} satisfies Story;
 
-export const WithoutCloseOnOverlay: Story = {
+export const WithoutCloseOnOverlay = {
+  args: {
+    isOpen: true,
+    children: <PText>Это окно можно закрыть только через кнопку закрытия или Escape</PText>,
+  },
   render: (args) => (
     <Modal {...args} isOpen={true} title="Важное окно" closeOnOverlayClick={false}>
       <PText>Это окно можно закрыть только через кнопку закрытия или Escape</PText>
     </Modal>
   ),
-};
+} satisfies Story;
