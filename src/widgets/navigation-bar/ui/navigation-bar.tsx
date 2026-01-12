@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAppSelector } from '@/shared/config/store-hooks';
@@ -8,6 +8,8 @@ import { useFormatBadge } from '@/shared/lib/hooks';
 import { MobileMenuProvider } from '@/features/mobile-menu-provider';
 import { MobileMenuButton } from '@/features/mobile-menu-button';
 import { MobileMenu } from '@/features/mobile-menu';
+import { OrderSampleModal } from '@/entities/orders/ui/order-sample-modal';
+import { OrderSampleForm } from '@/features/order-sample-form';
 import { Card } from '@/shared/ui/card';
 import { Button } from '@/shared/ui/button';
 import { Search } from '@/shared/ui/search';
@@ -33,6 +35,7 @@ function NavigationBarContent() {
   const cartItems = useAppSelector((state) => state.cart.items);
   const cartItemsCount = cartItems.length;
   const favoritesCount = useAppSelector((state) => state.favorites.productUuids.length);
+  const [isOrderSampleModalOpen, setIsOrderSampleModalOpen] = useState(false);
 
   const { searchQuery, handleSearchChange } = useProductSearchWithUrl();
 
@@ -82,11 +85,17 @@ function NavigationBarContent() {
             <div className="navigation-bar__desktop-right flex items-center justify-between gap-6 min-[1024px]:justify-end min-[1024px]:gap-[30px] flex-shrink-0">
               {/* Иконки - обернуты только для планшета, чтобы justify-between работал */}
               <div className="navigation-bar__desktop-icons flex items-center gap-6 min-[1024px]:contents flex-shrink-0">
-                <NavIcon icon="/profile.svg" label="Профиль" href="#" />
+                         <NavIcon icon="/profile.svg" label="Профиль" href="/profile" />
                 <NavIcon icon="/favorites.svg" label="Избранное" href="/favorites" badge={favoritesBadge} />
                 <NavIcon icon="/cart.svg" label="Корзина" href="/cart" badge={cartBadge} />
               </div>
-              <Button variant="primary" className="flex-shrink-0">Заказать образец</Button>
+              <Button
+                variant="primary"
+                className="flex-shrink-0"
+                onClick={() => setIsOrderSampleModalOpen(true)}
+              >
+                Заказать образец
+              </Button>
             </div>
           </div>
         </div>
@@ -105,6 +114,11 @@ function NavigationBarContent() {
         <MobileMenu />
         </div>
       </Card>
+      <OrderSampleModal
+        isOpen={isOrderSampleModalOpen}
+        onClose={() => setIsOrderSampleModalOpen(false)}
+        form={(props) => <OrderSampleForm {...props} />}
+      />
     </MobileMenuProvider>
   );
 }

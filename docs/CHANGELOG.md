@@ -16,6 +16,22 @@
   - `ProductsCatalog` обернут в `ScrollAnimateWrapper` с задержкой 100ms
   - Упрощена архитектура анимаций, устранены проблемы с гидратацией
 
+- **Modal API**: Упрощен API компонента Modal
+  - Удалены компоненты `ModalHeader`, `ModalBody`, `ModalFooter`
+  - Добавлен опциональный проп `title` в компонент `Modal`
+  - Заголовок с кнопкой закрытия рендерится автоматически при наличии `title`
+  - Контент имеет автоматические отступы (p-6)
+  - Упрощено использование модальных окон во всем приложении
+
+- **Modal architecture (FSD compliance)**: Рефакторинг модальных окон для соответствия FSD принципам
+  - Модальные окна профиля перемещены из `features` в `entities/profile/ui`
+    - `ProfileEditPersonalModal` → `entities/profile/ui/profile-edit-personal-modal`
+    - `ProfileEditCompanyModal` → `entities/profile/ui/profile-edit-company-modal`
+  - Модальное окно заказа образца перемещено из `features` в `entities/orders/ui/order-sample-modal`
+  - Все модальные окна используют render prop pattern (слоты) для приема форм из features
+  - Формы остались в features слое (не нарушают FSD)
+  - Widgets композируют entities и features, передавая формы через слоты
+
 ### Added
 - **Cart entities**: Рефакторинг `order-summary` на отдельные entities
   - Entity `CartDiscountInfo` для отображения информации о скидке
@@ -47,6 +63,15 @@
   - Стилизация блока "Срочный заказ" с границей и фоном
   - Добавлен заголовок "Ваш заказ" в order-summary
   - Улучшена визуальная иерархия элементов
+
+- **Profile page**: Добавлена страница профиля пользователя
+  - Страница профиля (`/profile`) с отображением личных данных и данных компании
+  - Entity `ProfilePersonalData` для отображения персональных данных
+  - Entity `ProfileCompanyData` для отображения данных компании
+  - Entity `ProfileStats` для отображения статистики (включая реальное количество избранных товаров)
+  - Entity `ProfileQuickActions` для быстрых действий (корзина, избранное)
+  - Redux slice `profileState` для управления данными профиля
+  - Виджет `ProfileContent` для композиции entities и features
 
 ### Changed
 - **FSD Architecture**: Исправлено нарушение FSD принципов
