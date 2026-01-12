@@ -78,6 +78,7 @@ export function CartItemView({
                 availability={availability}
                 availabilityColor={availabilityColor}
                 isInStock={isInStock}
+                withBackground
               />
             )}
           </div>

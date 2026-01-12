@@ -12,8 +12,6 @@ export function FavoritesCatalog() {
 
   return (
     <div className="favorites-catalog flex flex-col gap-4">
-      <H1 className="favorites-catalog__title text-2xl font-bold">Избранное</H1>
-
       {isError && errors.length > 0 && (
         <div className="favorites-catalog__error mb-4 rounded-lg bg-red-50 p-4 text-red-800">
           <p className="favorites-catalog__error-title font-semibold">Ошибка загрузки товаров:</p>

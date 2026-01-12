@@ -11,7 +11,7 @@ export function PromoBanner({
   iconAlt = defaultPromoBannerProps.iconAlt,
 }: PromoBannerProps) {
   return (
-    <Card className="promo-banner bg-white rounded-lg p-4 md:p-6">
+    <Card className="promo-banner bg-white rounded-lg p-4 md:p-6 mt-[50px]">
       <div className="promo-banner__container flex items-center justify-between gap-3 md:gap-6">
         {/* Text content */}
         <div className="promo-banner__content flex-1">

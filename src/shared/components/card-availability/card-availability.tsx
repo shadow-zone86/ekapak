@@ -1,16 +1,33 @@
 import Image from 'next/image';
 import { Tooltip } from '@/shared/ui/tooltip';
+import { cn } from '@/shared/lib/utils';
 
 interface CardAvailabilityProps {
   availability: string;
   availabilityColor: string;
   isInStock: boolean;
+  withBackground?: boolean;
 }
 
-export function CardAvailability({ availability, availabilityColor, isInStock }: CardAvailabilityProps) {
+export function CardAvailability({ availability, availabilityColor, isInStock, withBackground = false }: CardAvailabilityProps) {
+  const backgroundColor = withBackground
+    ? availabilityColor === '#2AC84D'
+      ? '#EDFFF1'
+      : '#F5F7FB'
+    : undefined;
+
   return (
     <>
-      <span className="card-availability__text text-description text-xs" style={{ color: availabilityColor }}>
+      <span
+        className={cn(
+          'card-availability__text text-description text-xs',
+          withBackground && 'px-2.5 py-2.5 rounded-md'
+        )}
+        style={{
+          color: availabilityColor,
+          backgroundColor,
+        }}
+      >
         {availability}
       </span>
       {!isInStock && (

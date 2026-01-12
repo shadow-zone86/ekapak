@@ -78,10 +78,7 @@ export function ProductCard({ slug }: ProductCardProps) {
               </Description>
             )}
 
-            {/* Название */}
-            <H1 className="product-card__title text-2xl font-bold text-black lg:text-3xl">
-              {product.name}
-            </H1>
+            {/* Название - убрано, теперь на уровне страницы */}
 
             {/* Наличие */}
             <div className="product-card__availability flex items-center gap-2">
