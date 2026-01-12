@@ -55,59 +55,60 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
   const totalPages = searchQuery.trim() ? 1 : (meta?.last_page || 1);
 
   return (
-    <div className="products-catalog flex flex-col gap-[10px] lg:flex-row">
-      <CategoryFilter />
+    <ScrollAnimateWrapper delay={100}>
+      <div className="products-catalog flex flex-col gap-[10px] lg:flex-row">
+        <CategoryFilter />
 
-      <div className="products-catalog__content flex-1">
-        <div className="products-catalog__sort-wrapper mb-4 flex items-center justify-end">
-          <ProductSort />
-        </div>
-        <>
-          {isLoadingProducts ? (
-            <div className="products-catalog__skeleton grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {[...Array(8)].map((_, i) => (
-                <div
-                  key={i}
-                  className="products-catalog__skeleton-item h-80 animate-pulse rounded-lg bg-gray-200"
-                />
-              ))}
-            </div>
-          ) : filteredAndSortedProducts.length > 0 ? (
-            <>
-              <div className="products-catalog__grid grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-                {filteredAndSortedProducts.map((product, index) => {
-                  const defaultOffer = product.defaultOffer;
-                  if (!defaultOffer) {
-                    return null;
-                  }
-                  const initialQuantity = defaultOffer.minPurchase ?? 100;
-
-                  return (
-                    <ProductQuantityProvider key={product.uuid} initialQuantity={initialQuantity}>
-                      <ScrollAnimateWrapper delay={(index % 10) * 50}>
-                        <ProductCardView
-                          product={product}
-                          favoriteButton={<FavoriteButton productUuid={product.uuid} productName={product.name} />}
-                          quantityControls={<ProductQuantityControls defaultOffer={defaultOffer} />}
-                          addToCartButton={<AddToCartButton product={product} />}
-                        />
-                      </ScrollAnimateWrapper>
-                    </ProductQuantityProvider>
-                  );
-                })}
+        <div className="products-catalog__content flex-1">
+          <div className="products-catalog__sort-wrapper mb-4 flex items-center justify-end">
+            <ProductSort />
+          </div>
+          <>
+            {isLoadingProducts ? (
+              <div className="products-catalog__skeleton grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {[...Array(8)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="products-catalog__skeleton-item h-80 animate-pulse rounded-lg bg-gray-200"
+                  />
+                ))}
               </div>
-              {!searchQuery.trim() && totalPages > 1 && (
-                <Pagination currentPage={page} totalPages={totalPages} basePath="/" />
-              )}
-            </>
-          ) : (
-            <div className="products-catalog__empty col-span-full py-12 text-center text-gray">
-              Товары не найдены
-            </div>
-          )}
-        </>
+            ) : filteredAndSortedProducts.length > 0 ? (
+              <>
+                <div className="products-catalog__grid grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+                  {filteredAndSortedProducts.map((product, index) => {
+                    const defaultOffer = product.defaultOffer;
+                    if (!defaultOffer) {
+                      return null;
+                    }
+                    const initialQuantity = defaultOffer.minPurchase ?? 100;
+
+                    return (
+                      <ProductQuantityProvider key={product.uuid} initialQuantity={initialQuantity}>
+                        <ScrollAnimateWrapper delay={(index % 10) * 50}>
+                          <ProductCardView
+                            product={product}
+                            favoriteButton={<FavoriteButton productUuid={product.uuid} productName={product.name} />}
+                            quantityControls={<ProductQuantityControls defaultOffer={defaultOffer} />}
+                            addToCartButton={<AddToCartButton product={product} />}
+                          />
+                        </ScrollAnimateWrapper>
+                      </ProductQuantityProvider>
+                    );
+                  })}
+                </div>
+                {!searchQuery.trim() && totalPages > 1 && (
+                  <Pagination currentPage={page} totalPages={totalPages} basePath="/" />
+                )}
+              </>
+            ) : (
+              <div className="products-catalog__empty col-span-full py-12 text-center text-gray">
+                Товары не найдены
+              </div>
+            )}
+          </>
+        </div>
       </div>
-    </div>
+    </ScrollAnimateWrapper>
   );
 }
-

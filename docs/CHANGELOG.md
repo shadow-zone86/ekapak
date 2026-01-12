@@ -7,6 +7,15 @@
 
 ## [Unreleased]
 
+### Changed
+- **Animations**: Рефакторинг анимаций - отказ от библиотеки AOS
+  - Удалена зависимость `aos` и `@types/aos`
+  - Удален `AOSProvider` компонент
+  - Все анимации теперь используют существующий `ScrollAnimateWrapper` компонент
+  - `PromoBanner` обернут в `ScrollAnimateWrapper` для анимации появления
+  - `ProductsCatalog` обернут в `ScrollAnimateWrapper` с задержкой 100ms
+  - Упрощена архитектура анимаций, устранены проблемы с гидратацией
+
 ### Added
 - **Cart entities**: Рефакторинг `order-summary` на отдельные entities
   - Entity `CartDiscountInfo` для отображения информации о скидке

@@ -41,8 +41,8 @@ export default function RootLayout({
         <StoreProvider>
           <QueryProvider>
             <NotificationProvider>
-            {children}
-            <CartSidebar />
+              {children}
+              <CartSidebar />
             </NotificationProvider>
           </QueryProvider>
         </StoreProvider>
