@@ -7,6 +7,22 @@
 
 ## [Unreleased]
 
+### Added
+- **PageLoader component**: Добавлен компонент загрузки страницы с анимацией прогресса
+  - Компонент `PageLoader` в `shared/ui/page-loader`
+  - Анимация закрашивания логотипа слева направо (0% → 75% → 100%)
+  - Автоматическое скрытие после полной загрузки страницы
+  - Использует логотип из `/public/logo.svg`
+  - Интегрирован в `app/layout.tsx` для отображения при загрузке приложения
+  - Storybook stories и README документация
+
+- **Order sample form refactoring**: Рефакторинг функциональности заказа образца
+  - Логика валидации вынесена в `lib/validateOrderSampleForm.ts`
+  - Хук управления формой `useOrderSampleForm` в `lib/useOrderSampleForm.ts`
+  - Форма `OrderSampleForm` перемещена из `entities/orders` в `features/order-sample-form`
+  - Состояние модального окна вынесено в `entities/orders/lib/useOrderSampleModal.ts`
+  - Улучшена тестируемость и переиспользуемость компонентов
+
 ### Changed
 - **Animations**: Рефакторинг анимаций - отказ от библиотеки AOS
   - Удалена зависимость `aos` и `@types/aos`
@@ -31,6 +47,8 @@
   - Все модальные окна используют render prop pattern (слоты) для приема форм из features
   - Формы остались в features слое (не нарушают FSD)
   - Widgets композируют entities и features, передавая формы через слоты
+  - Состояние модального окна заказа образца вынесено в `entities/orders/lib/useOrderSampleModal.ts`
+  - Форма заказа образца перемещена из `entities/orders` в `features/order-sample-form` (соответствие FSD)
 
 ### Added
 - **Cart entities**: Рефакторинг `order-summary` на отдельные entities
@@ -97,6 +115,8 @@
 ### Fixed
 - Исправлены нарушения FSD архитектуры
 - Улучшена консистентность использования hooks
+- Исправлены ошибки TypeScript в `PageLoader` (явная типизация переменной `e`)
+- Исправлены ошибки линтера в Storybook stories (вынесены хуки в отдельные компоненты)
 
 ## [0.1.1] - 2025-01-12
 
