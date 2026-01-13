@@ -1,9 +1,6 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { ProductCard } from '@/widgets/product-card';
-import { CartSidebar } from '@/widgets/cart-sidebar';
-import { ContactBar } from '@/widgets/contact-bar';
-import { NavigationBar } from '@/widgets/navigation-bar';
 import { ProductPageHeader } from './product-page-header';
 import { resolveOr } from '@/shared/lib/di/container';
 import { PRODUCT_TOKENS } from '@/entities/product/api/tokens';
@@ -73,21 +70,12 @@ export default async function ProductPageRoute({ params }: ProductPageRouteProps
 
   return (
     <HydrationBoundary state={dehydratedState}>
-      <div className="min-h-screen bg-background animate-page-fade-in">
-        <div className="container mx-auto px-4 pt-5">
-          <header className="bg-white border-stroke rounded-lg overflow-hidden mb-5">
-            <ContactBar />
-            <NavigationBar />
-          </header>
-        </div>
-        <main className="container mx-auto px-4 pb-8">
-          <Suspense fallback={<div className="text-center py-12">Загрузка товара...</div>}>
-            <ProductPageHeader slug={resolvedParams.slug} />
-            <ProductCard slug={resolvedParams.slug} />
-          </Suspense>
-        </main>
-        <CartSidebar />
-      </div>
+      <main className="container mx-auto px-4 pb-8 animate-page-fade-in">
+        <Suspense fallback={<div className="text-center py-12">Загрузка товара...</div>}>
+          <ProductPageHeader slug={resolvedParams.slug} />
+          <ProductCard slug={resolvedParams.slug} />
+        </Suspense>
+      </main>
     </HydrationBoundary>
   );
 }

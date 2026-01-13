@@ -1,9 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { CartSidebar } from '@/widgets/cart-sidebar';
-import { ContactBar } from '@/widgets/contact-bar';
-import { NavigationBar } from '@/widgets/navigation-bar';
 import { useAppSelector } from '@/shared/config/store-hooks';
 import { useCartProducts } from '@/entities/product/api/useCartProducts';
 import { H1, PText } from '@/shared/ui/typography';
@@ -17,49 +14,24 @@ export default function CartPageRoute() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-background animate-page-fade-in">
-        <div className="container mx-auto px-4 pt-5">
-          <header className="bg-white border-stroke rounded-lg overflow-hidden mb-5">
-            <ContactBar />
-            <NavigationBar />
-          </header>
-        </div>
-      <div className="container mx-auto px-4 pb-8">
+      <div className="container mx-auto px-4 pb-8 animate-page-fade-in">
         <div className="text-center py-12">Загрузка товаров корзины...</div>
-      </div>
-        <CartSidebar />
       </div>
     );
   }
 
   if (isError) {
     return (
-      <div className="min-h-screen bg-background animate-page-fade-in">
-        <div className="container mx-auto px-4 pt-5">
-          <header className="bg-white border-stroke rounded-lg overflow-hidden mb-5">
-            <ContactBar />
-            <NavigationBar />
-          </header>
-        </div>
-      <div className="container mx-auto px-4 pb-8">
+      <div className="container mx-auto px-4 pb-8 animate-page-fade-in">
         <div className="text-center py-12 text-red-600">
           Ошибка загрузки товаров корзины: {errors.map(e => e?.message || String(e)).join(', ')}
         </div>
-      </div>
-        <CartSidebar />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background animate-page-fade-in">
-      <div className="container mx-auto px-4 pt-5">
-        <header className="bg-white border-stroke rounded-lg overflow-hidden mb-5">
-          <ContactBar />
-          <NavigationBar />
-        </header>
-      </div>
-      <div className="container mx-auto px-4 pb-8">
+    <div className="container mx-auto px-4 pb-8 animate-page-fade-in">
         {cartItems.length > 0 && (
           <>
             {/* Хлебные крошки */}
@@ -135,7 +107,5 @@ export default function CartPageRoute() {
           </div>
         )}
       </div>
-      <CartSidebar />
-    </div>
   );
 }
