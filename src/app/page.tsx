@@ -1,10 +1,7 @@
 import { Suspense } from 'react';
 import type { Metadata } from 'next';
-import { CartSidebar } from '@/widgets/cart-sidebar/ui/cart-sidebar';
 import { ProductsCatalog } from '@/widgets/products-catalog';
 import { PromoBanner } from '@/widgets/promo-banner';
-import { ContactBar } from '@/widgets/contact-bar';
-import { NavigationBar } from '@/widgets/navigation-bar';
 import { resolveOr } from '@/shared/lib/di/container';
 import { PRODUCT_TOKENS } from '@/entities/product/api/tokens';
 import { CATEGORY_TOKENS } from '@/entities/category/api/tokens';
@@ -98,23 +95,14 @@ export default async function HomePage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="min-h-screen bg-background animate-page-fade-in">
-        <div className="container mx-auto px-4 pt-5">
-          <header className="bg-white border-stroke rounded-lg overflow-hidden mb-5">
-            <ContactBar />
-            <NavigationBar />
-          </header>
+      <main className="container mx-auto px-4 pb-8 animate-page-fade-in">
+        <PromoBanner />
+        <div className="mt-[20px]">
+          <Suspense fallback={<div className="text-center py-12">Загрузка...</div>}>
+            <ProductsCatalog initialPage={page} initialCategory={categoryUuid} />
+          </Suspense>
         </div>
-        <main className="container mx-auto px-4 pb-8">
-          <PromoBanner />
-          <div className="mt-[20px]">
-            <Suspense fallback={<div className="text-center py-12">Загрузка...</div>}>
-              <ProductsCatalog initialPage={page} initialCategory={categoryUuid} />
-            </Suspense>
-          </div>
-        </main>
-        <CartSidebar />
-      </div>
+      </main>
     </HydrationBoundary>
   );
 }
