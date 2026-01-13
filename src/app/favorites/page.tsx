@@ -1,9 +1,6 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { CartSidebar } from '@/widgets/cart-sidebar';
 import { FavoritesCatalog } from '@/widgets/favorites-catalog';
-import { ContactBar } from '@/widgets/contact-bar';
-import { NavigationBar } from '@/widgets/navigation-bar';
 import { FavoritesPageHeader } from './favorites-page-header';
 
 export const metadata: Metadata = {
@@ -19,20 +16,11 @@ export const metadata: Metadata = {
 
 export default function FavoritesPage() {
   return (
-    <div className="min-h-screen bg-background animate-page-fade-in">
-      <div className="container mx-auto px-4 pt-5">
-        <header className="bg-white border-stroke rounded-lg overflow-hidden mb-5">
-          <ContactBar />
-          <NavigationBar />
-        </header>
-      </div>
-      <main className="container mx-auto px-4 pb-8">
-        <FavoritesPageHeader />
-        <Suspense fallback={<div className="text-center py-12">Загрузка...</div>}>
-          <FavoritesCatalog />
-        </Suspense>
-      </main>
-      <CartSidebar />
-    </div>
+    <main className="container mx-auto px-4 pb-8 animate-page-fade-in">
+      <FavoritesPageHeader />
+      <Suspense fallback={<div className="text-center py-12">Загрузка...</div>}>
+        <FavoritesCatalog />
+      </Suspense>
+    </main>
   );
 }
