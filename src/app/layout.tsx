@@ -8,6 +8,7 @@ import { NotificationProvider } from "@/shared/ui/notification-provider";
 import { CartSidebar } from "@/widgets/cart-sidebar";
 import { ContactBar } from "@/widgets/contact-bar";
 import { NavigationBar } from "@/widgets/navigation-bar";
+import { PageLoader } from "@/shared/ui/page-loader";
 import { registerAllDependencies } from "./providers/di";
 
 const manrope = Manrope({
@@ -41,6 +42,7 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} antialiased`}
       >
+        <PageLoader />
         <StoreProvider>
           <QueryProvider>
             <NotificationProvider>
