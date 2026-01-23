@@ -1,5 +1,5 @@
 import { findCategoryName } from './findCategoryName';
-import type { ICategoryUiDto } from '@/entities/category/model/types';
+import type { ICategoryUiDto } from '@/entities/category/model/dto/types';
 
 describe('findCategoryName', () => {
   const categories: ICategoryUiDto[] = [

@@ -246,7 +246,14 @@ npm run test:coverage    # Запуск тестов с покрытием
 ```bash
 npm run lint             # Проверка кода (ESLint)
 npm run lint -- --fix    # Автоисправление
+npm run type-check       # Проверка типов TypeScript
 ```
+
+**Pre-commit проверки**: Перед каждым коммитом автоматически выполняются:
+- ✅ Линтер (ESLint) для измененных файлов
+- ✅ Тесты для измененных файлов
+- ✅ Проверка типов TypeScript (`type-check`)
+- ✅ Проверка сборки проекта (`build`)
 
 ### Storybook
 

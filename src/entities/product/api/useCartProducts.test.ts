@@ -7,6 +7,7 @@ import { useAppSelector } from '@/shared/config/store-hooks';
 import type { Product } from '../model/types';
 import { mapProductApiToUi } from '@/entities/product/model/dto/mappers';
 import type { CartItem } from '@/entities/cart/model/types';
+import { getCurrencySymbol } from '@/shared/lib/currency';
 
 // Мокаем зависимости
 jest.mock('@/shared/config/store-hooks', () => ({
@@ -84,7 +85,7 @@ describe('useCartProducts', () => {
   });
 
   it('should return empty products when cart is empty', () => {
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         cart: {
           items: [],
@@ -110,9 +111,12 @@ describe('useCartProducts', () => {
         id: 'cart-item-1',
         productUuid: 'product-1',
         offerUuid: 'offer-1',
+        offerName: 'Offer 1',
         quantity: 2,
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
         productName: 'Test Product 1',
         productImage: 'image1.jpg',
         article: 'ART-1',
@@ -121,9 +125,12 @@ describe('useCartProducts', () => {
         id: 'cart-item-2',
         productUuid: 'product-1', // Дубликат UUID
         offerUuid: 'offer-2',
+        offerName: 'Offer 2',
         quantity: 3,
         price: 150,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
         productName: 'Test Product 1',
         productImage: 'image1.jpg',
         article: 'ART-1',
@@ -132,9 +139,12 @@ describe('useCartProducts', () => {
         id: 'cart-item-3',
         productUuid: 'product-2',
         offerUuid: 'offer-3',
+        offerName: 'Offer 3',
         quantity: 1,
         price: 200,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
         productName: 'Test Product 2',
         productImage: 'image2.jpg',
         article: 'ART-2',
@@ -171,7 +181,7 @@ describe('useCartProducts', () => {
       ],
     };
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         cart: {
           items: mockCartItems,
@@ -210,9 +220,12 @@ describe('useCartProducts', () => {
         id: 'cart-item-1',
         productUuid: 'product-1',
         offerUuid: 'offer-1',
+        offerName: 'Offer 1',
         quantity: 1,
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
         productName: 'Test Product 1',
         productImage: 'image1.jpg',
         article: 'ART-1',
@@ -226,7 +239,7 @@ describe('useCartProducts', () => {
       offers: [],
     };
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         cart: {
           items: mockCartItems,
@@ -258,16 +271,19 @@ describe('useCartProducts', () => {
         id: 'cart-item-1',
         productUuid: 'product-1',
         offerUuid: 'offer-1',
+        offerName: 'Offer 1',
         quantity: 1,
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
         productName: 'Test Product',
         productImage: 'image.jpg',
         article: 'ART-1',
       },
     ];
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         cart: {
           items: mockCartItems,
@@ -297,9 +313,12 @@ describe('useCartProducts', () => {
         id: 'cart-item-1',
         productUuid: 'product-1',
         offerUuid: 'offer-1',
+        offerName: 'Offer 1',
         quantity: 1,
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
         productName: 'Test Product',
         productImage: 'image.jpg',
         article: 'ART-1',
@@ -308,9 +327,12 @@ describe('useCartProducts', () => {
         id: 'cart-item-2',
         productUuid: 'product-2',
         offerUuid: 'offer-2',
+        offerName: 'Offer 2',
         quantity: 1,
         price: 200,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
         productName: 'Test Product 2',
         productImage: 'image2.jpg',
         article: 'ART-2',
@@ -324,7 +346,7 @@ describe('useCartProducts', () => {
       offers: [],
     };
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         cart: {
           items: mockCartItems,
@@ -356,9 +378,12 @@ describe('useCartProducts', () => {
         id: 'cart-item-1',
         productUuid: 'product-1',
         offerUuid: 'offer-1',
+        offerName: 'Offer 1',
         quantity: 1,
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
         productName: 'Test Product',
         productImage: 'image.jpg',
         article: 'ART-1',
@@ -367,9 +392,12 @@ describe('useCartProducts', () => {
         id: 'cart-item-2',
         productUuid: 'product-2',
         offerUuid: 'offer-2',
+        offerName: 'Offer 2',
         quantity: 1,
         price: 200,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
         productName: 'Test Product 2',
         productImage: 'image2.jpg',
         article: 'ART-2',
@@ -385,7 +413,7 @@ describe('useCartProducts', () => {
 
     const error = new Error('Failed to fetch product-2');
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         cart: {
           items: mockCartItems,
@@ -418,9 +446,12 @@ describe('useCartProducts', () => {
         id: 'cart-item-1',
         productUuid: 'product-1',
         offerUuid: 'offer-1',
+        offerName: 'Offer 1',
         quantity: 1,
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
         productName: 'Test Product',
         productImage: 'image.jpg',
         article: 'ART-1',
@@ -443,7 +474,7 @@ describe('useCartProducts', () => {
       ],
     };
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         cart: {
           items: mockCartItems,
