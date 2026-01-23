@@ -27,7 +27,7 @@ export function OrderSummary() {
   const [isUrgent, setIsUrgent] = useState(false);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
-  const currencySymbol = cartItems[0]?.currency.trim().toUpperCase() === 'RUB' ? '₽' : cartItems[0]?.currency || '';
+  const currencySymbol = cartItems[0]?.currencySymbol || '';
 
   return (
     <div className="order-summary rounded-lg border border-stroke bg-white p-6 shadow-sm">

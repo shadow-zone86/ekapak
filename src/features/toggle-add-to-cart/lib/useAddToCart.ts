@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/config/store-hooks';
-import { addItem, updateQuantity } from '@/entities/cart/model/cartState';
+import { addItem, updateQuantity } from '@/entities/cart/model/store/cartState';
 import { useNotificationContext } from '@/shared/ui/notification-provider';
 import type { IProductUiDto } from '@/entities/product/model/dto/types';
 
@@ -20,6 +20,7 @@ export function useAddToCart({ product, quantity }: UseAddToCartProps) {
   const price = defaultOffer?.price || 0;
   const unit = defaultOffer?.unit || 'шт.';
   const currency = defaultOffer?.currency || 'RUB';
+  const currencySymbol = defaultOffer?.currencySymbol || '₽';
 
   // Проверяем, есть ли товар уже в корзине
   const existingCartItem = defaultOffer
@@ -57,6 +58,7 @@ export function useAddToCart({ product, quantity }: UseAddToCartProps) {
             offerName: product.name,
             price,
             currency,
+            currencySymbol,
             unit,
             article: product.sku || '',
           })
@@ -68,7 +70,7 @@ export function useAddToCart({ product, quantity }: UseAddToCartProps) {
         duration: 3000,
       });
     }
-  }, [dispatch, defaultOffer, price, existingCartItem, quantity, product, currency, unit, addNotification]);
+  }, [dispatch, defaultOffer, price, existingCartItem, quantity, product, currency, currencySymbol, unit, addNotification]);
 
   const isDisabled = !defaultOffer || !price || isNaN(price) || !product.isInStock;
 

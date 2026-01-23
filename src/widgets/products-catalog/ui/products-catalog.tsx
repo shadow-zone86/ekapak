@@ -10,6 +10,7 @@ import { FavoriteButton } from '@/features/toggle-favorite';
 import { Pagination } from '@/features/pagination';
 import { CategoryFilter } from '@/features/category-filter';
 import { ProductSort, sortProducts, type SortOption } from '@/features/product-sort';
+import { IProductUiDto } from '@/entities/product/model/dto/types';
 import { ScrollAnimateWrapper } from '@/shared/components/scroll-animate-wrapper/scroll-animate-wrapper';
 
 interface ProductsCatalogProps {
@@ -41,9 +42,9 @@ export function ProductsCatalog(_props: ProductsCatalogProps) {
     // Фильтрация по поисковому запросу
     let filtered = allProducts;
     if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim();
-      filtered = allProducts.filter((product) =>
-        product.name.toLowerCase().includes(query)
+      const normalizeSearchQuery = searchQuery.toLowerCase().trim();
+      filtered = allProducts.filter((product: IProductUiDto) =>
+        product.name.toLowerCase().includes(normalizeSearchQuery)
       );
     }
 

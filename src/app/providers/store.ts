@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from '@/entities/cart/model/cartState';
-import favoritesReducer from '@/entities/favorites/model/favoritesState';
-import profileReducer from '@/entities/profile/model/profileState';
+import cartReducer from '@/entities/cart/model/store/cartState';
+import favoritesReducer from '@/entities/favorites/model/store/favoritesState';
+import profileReducer from '@/entities/profile/model/store/profileState';
 
 export const makeStore = () => {
   return configureStore({
