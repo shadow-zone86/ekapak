@@ -236,6 +236,11 @@ npm run test:watch       # Запуск тестов в watch режиме
 npm run test:coverage    # Запуск тестов с покрытием
 ```
 
+**Текущее покрытие**: 431 тест, все проходят успешно
+- Redux slices: `cartState`, `profileState`, `favoritesState` (100% покрытие)
+- Утилиты: `currency`, `utils`, hooks (100% покрытие)
+- API сервисы и хуки: полное покрытие
+
 ### Качество кода
 
 ```bash

@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useAppDispatch, useAppSelector } from '@/shared/config/store-hooks';
-import { toggleFavorite } from '@/entities/favorites/model/favoritesState';
+import { toggleFavorite } from '@/entities/favorites/model/store/favoritesState';
 import { useToggleFavorite } from './useToggleFavorite';
 
 // Мокаем Redux hooks
@@ -10,7 +10,7 @@ jest.mock('@/shared/config/store-hooks', () => ({
 }));
 
 // Мокаем favorites slice actions
-jest.mock('@/entities/favorites/model/favoritesState', () => ({
+jest.mock('@/entities/favorites/model/store/favoritesState', () => ({
   toggleFavorite: jest.fn((payload) => ({ type: 'favorites/toggleFavorite', payload })),
 }));
 

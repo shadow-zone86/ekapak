@@ -3,7 +3,7 @@
 import { useState, FormEvent, useEffect } from 'react';
 import { Button } from '@/shared/ui/button';
 import { Description } from '@/shared/ui/typography';
-import type { ProfilePersonalData } from '@/entities/profile/model/profileState';
+import type { ProfilePersonalData } from '@/entities/profile/model/types';
 
 export interface ProfileEditPersonalFormProps {
   initialData: ProfilePersonalData;

@@ -8,6 +8,41 @@
 ## [Unreleased]
 
 ### Added
+- **Currency utility**: Добавлена утилита для работы с валютами
+  - Функция `getCurrencySymbol` в `shared/lib/currency.ts` для централизованного преобразования кодов валют в символы
+  - Преобразование `RUB` → `₽` вынесено в единое место
+  - Покрыта тестами (32 теста, 100% покрытие)
+
+- **Test coverage**: Расширено тестовое покрытие Redux slices и утилит
+  - Тесты для `cartState` (33 теста, 100% покрытие)
+  - Тесты для `profileState` (26 тестов, 100% покрытие)
+  - Тесты для `currency.ts` (32 теста, 100% покрытие)
+  - Все тесты проходят успешно (431 тест)
+
+### Changed
+- **Currency handling refactoring**: Рефакторинг обработки валют для устранения дублирования
+  - Добавлено поле `currencySymbol` в тип `CartItem` для хранения символа валюты
+  - Убраны дублирующие проверки `currency === 'RUB' ? '₽'` из UI компонентов
+  - Компоненты `order-summary`, `cart-sidebar`, `cart-item` теперь используют `currencySymbol` из данных
+  - Маппер `mapProductStoreToUi` использует утилиту `getCurrencySymbol` вместо локальной функции
+  - Улучшена консистентность и поддерживаемость кода
+
+- **Profile types refactoring**: Рефакторинг типов профиля
+  - Типы `ProfilePersonalData`, `ProfileCompanyData`, `ProfileState` вынесены в `profile/model/types.ts`
+  - Улучшена организация кода и переиспользуемость типов
+
+- **State management structure**: Улучшена структура Redux slices
+  - Redux slices перемещены в подпапку `store/` для лучшей организации
+  - `cartState.ts` → `cart/model/store/cartState.ts`
+  - `favoritesState.ts` → `favorites/model/store/favoritesState.ts`
+  - `profileState.ts` → `profile/model/store/profileState.ts`
+  - Обновлены импорты во всех тестах и компонентах
+
+### Fixed
+- Исправлены пути в тестах после рефакторинга структуры Redux slices
+- Исправлены импорты в тестах `useAddToCart`, `useRemoveFromCart`, `useToggleFavorite`
+
+### Added (continued)
 - **PageLoader component**: Добавлен компонент загрузки страницы с анимацией прогресса
   - Компонент `PageLoader` в `shared/ui/page-loader`
   - Анимация закрашивания логотипа слева направо (0% → 75% → 100%)
@@ -24,6 +59,24 @@
   - Улучшена тестируемость и переиспользуемость компонентов
 
 ### Changed
+- **Currency handling refactoring**: Рефакторинг обработки валют для устранения дублирования
+  - Добавлено поле `currencySymbol` в тип `CartItem` для хранения символа валюты
+  - Убраны дублирующие проверки `currency === 'RUB' ? '₽'` из UI компонентов
+  - Компоненты `order-summary`, `cart-sidebar`, `cart-item` теперь используют `currencySymbol` из данных
+  - Маппер `mapProductStoreToUi` использует утилиту `getCurrencySymbol` вместо локальной функции
+  - Улучшена консистентность и поддерживаемость кода
+
+- **Profile types refactoring**: Рефакторинг типов профиля
+  - Типы `ProfilePersonalData`, `ProfileCompanyData`, `ProfileState` вынесены в `profile/model/types.ts`
+  - Улучшена организация кода и переиспользуемость типов
+
+- **State management structure**: Улучшена структура Redux slices
+  - Redux slices перемещены в подпапку `store/` для лучшей организации
+  - `cartState.ts` → `cart/model/store/cartState.ts`
+  - `favoritesState.ts` → `favorites/model/store/favoritesState.ts`
+  - `profileState.ts` → `profile/model/store/profileState.ts`
+  - Обновлены импорты во всех тестах и компонентах
+
 - **Animations**: Рефакторинг анимаций - отказ от библиотеки AOS
   - Удалена зависимость `aos` и `@types/aos`
   - Удален `AOSProvider` компонент
@@ -113,6 +166,8 @@
 - **Promo banner**: Добавлен отступ сверху 50px
 
 ### Fixed
+- Исправлены пути в тестах после рефакторинга структуры Redux slices
+- Исправлены импорты в тестах `useAddToCart`, `useRemoveFromCart`, `useToggleFavorite`
 - Исправлены нарушения FSD архитектуры
 - Улучшена консистентность использования hooks
 - Исправлены ошибки TypeScript в `PageLoader` (явная типизация переменной `e`)

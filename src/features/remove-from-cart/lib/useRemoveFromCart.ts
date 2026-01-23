@@ -1,7 +1,7 @@
 'use client';
 
 import { useAppDispatch } from '@/shared/config/store-hooks';
-import { removeItem } from '@/entities/cart/model/cartState';
+import { removeItem } from '@/entities/cart/model/store/cartState';
 
 interface UseRemoveFromCartProps {
   cartItemId: string;
