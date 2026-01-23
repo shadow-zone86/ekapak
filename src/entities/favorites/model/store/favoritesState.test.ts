@@ -1,5 +1,5 @@
 import favoritesReducer, { toggleFavorite, addFavorite, removeFavorite } from './favoritesState';
-import type { FavoritesState } from './types';
+import type { FavoritesState } from '../types';
 
 describe('favoritesState', () => {
   const initialState: FavoritesState = {

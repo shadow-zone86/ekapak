@@ -3,7 +3,7 @@
 import { useState, FormEvent, useEffect } from 'react';
 import { Button } from '@/shared/ui/button';
 import { Description } from '@/shared/ui/typography';
-import type { ProfileCompanyData } from '@/entities/profile/model/profileState';
+import type { ProfileCompanyData } from '@/entities/profile/model/types';
 
 export interface ProfileEditCompanyFormProps {
   initialData: ProfileCompanyData;

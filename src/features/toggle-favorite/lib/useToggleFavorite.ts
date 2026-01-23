@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '@/shared/config/store-hooks';
-import { toggleFavorite } from '@/entities/favorites/model/favoritesState';
+import { toggleFavorite } from '@/entities/favorites/model/store/favoritesState';
 import { useNotificationContext } from '@/shared/ui/notification-provider';
 
 interface UseToggleFavoriteProps {
@@ -21,7 +21,7 @@ export function useToggleFavorite({ productUuid, productName }: UseToggleFavorit
     if (wasFavorite) {
       addNotification({
         type: 'info',
-        message: productName 
+        message: productName
           ? `Товар "${productName}" удален из избранного`
           : 'Товар удален из избранного',
         duration: 3000,
@@ -29,7 +29,7 @@ export function useToggleFavorite({ productUuid, productName }: UseToggleFavorit
     } else {
       addNotification({
         type: 'success',
-        message: productName 
+        message: productName
           ? `Товар "${productName}" добавлен в избранное`
           : 'Товар добавлен в избранное',
         duration: 3000,

@@ -1,7 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useAddToCart } from './useAddToCart';
 import { useAppDispatch, useAppSelector } from '@/shared/config/store-hooks';
-import { addItem, updateQuantity } from '@/entities/cart/model/cartState';
+import { addItem, updateQuantity } from '@/entities/cart/model/store/cartState';
 import type { IProductUiDto } from '@/entities/product/model/dto/types';
 
 // Мокаем Redux hooks
@@ -11,7 +11,7 @@ jest.mock('@/shared/config/store-hooks', () => ({
 }));
 
 // Мокаем cart slice actions
-jest.mock('@/entities/cart/model/cartState', () => ({
+jest.mock('@/entities/cart/model/store/cartState', () => ({
   addItem: jest.fn((payload) => ({ type: 'cart/addItem', payload })),
   updateQuantity: jest.fn((payload) => ({ type: 'cart/updateQuantity', payload })),
 }));
@@ -160,6 +160,7 @@ describe('useAddToCart', () => {
         offerName: 'Test Product',
         price: 100,
         currency: 'RUB',
+        currencySymbol: '₽',
         unit: 'шт.',
         article: 'SKU-123',
       });

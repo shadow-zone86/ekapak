@@ -7,7 +7,8 @@ import cartReducer, {
   closeCart,
   clearCart,
 } from './cartState';
-import type { CartState, CartItem } from './types';
+import type { CartState, CartItem } from '../types';
+import { getCurrencySymbol } from '@/shared/lib/currency';
 
 describe('cartState', () => {
   const initialState: CartState = {
@@ -29,6 +30,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         article: 'ART-1',
       };
@@ -44,11 +46,13 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         article: 'ART-1',
         quantity: 1,
       });
       expect(newState.items[0].id).toBeDefined();
+      expect(typeof newState.items[0].id).toBe('string');
     });
 
     it('should increment quantity when item already exists', () => {
@@ -61,6 +65,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 2,
         article: 'ART-1',
@@ -79,6 +84,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         article: 'ART-1',
       };
@@ -100,6 +106,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 1,
         article: 'ART-1',
@@ -118,6 +125,7 @@ describe('cartState', () => {
         offerName: 'Offer 2',
         price: 150,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         article: 'ART-1',
       };
@@ -139,6 +147,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         article: 'ART-1',
       };
@@ -147,6 +156,65 @@ describe('cartState', () => {
       const state2 = cartReducer(initialState, addItem(payload));
 
       expect(state1.items[0].id).not.toBe(state2.items[0].id);
+    });
+
+    it('should handle item with USD currency', () => {
+      const payload = {
+        productUuid: 'product-1',
+        productName: 'Product 1',
+        productImage: '/image1.jpg',
+        offerUuid: 'offer-1',
+        offerName: 'Offer 1',
+        price: 10.5,
+        currency: 'USD',
+        currencySymbol: getCurrencySymbol('USD'),
+        unit: 'шт.',
+        article: 'ART-1',
+      };
+
+      const newState = cartReducer(initialState, addItem(payload));
+
+      expect(newState.items).toHaveLength(1);
+      expect(newState.items[0].currency).toBe('USD');
+      expect(newState.items[0].currencySymbol).toBe('USD');
+    });
+
+    it('should handle item without article', () => {
+      const payload = {
+        productUuid: 'product-1',
+        productName: 'Product 1',
+        productImage: '/image1.jpg',
+        offerUuid: 'offer-1',
+        offerName: 'Offer 1',
+        price: 100,
+        currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
+      };
+
+      const newState = cartReducer(initialState, addItem(payload));
+
+      expect(newState.items).toHaveLength(1);
+      expect(newState.items[0].article).toBeUndefined();
+    });
+
+    it('should handle item without productImage', () => {
+      const payload = {
+        productUuid: 'product-1',
+        productName: 'Product 1',
+        offerUuid: 'offer-1',
+        offerName: 'Offer 1',
+        price: 100,
+        currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
+        article: 'ART-1',
+      };
+
+      const newState = cartReducer(initialState, addItem(payload));
+
+      expect(newState.items).toHaveLength(1);
+      expect(newState.items[0].productImage).toBeUndefined();
     });
   });
 
@@ -161,6 +229,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 1,
         article: 'ART-1',
@@ -175,6 +244,7 @@ describe('cartState', () => {
         offerName: 'Offer 2',
         price: 200,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 1,
         article: 'ART-2',
@@ -189,12 +259,14 @@ describe('cartState', () => {
 
       expect(newState.items).toHaveLength(1);
       expect(newState.items[0].id).toBe('item-2');
+      expect(newState.isOpen).toBe(false);
     });
 
     it('should handle removing from empty cart', () => {
       const newState = cartReducer(initialState, removeItem('item-1'));
 
       expect(newState.items).toHaveLength(0);
+      expect(newState.isOpen).toBe(false);
     });
 
     it('should handle removing non-existent item', () => {
@@ -207,6 +279,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 1,
         article: 'ART-1',
@@ -235,6 +308,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 2,
         article: 'ART-1',
@@ -248,6 +322,7 @@ describe('cartState', () => {
       const newState = cartReducer(state, updateQuantity({ id: 'item-1', quantity: 5 }));
 
       expect(newState.items[0].quantity).toBe(5);
+      expect(newState.items).toHaveLength(1);
     });
 
     it('should remove item when quantity is set to 0', () => {
@@ -260,6 +335,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 2,
         article: 'ART-1',
@@ -285,6 +361,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 2,
         article: 'ART-1',
@@ -322,6 +399,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 2,
         article: 'ART-1',
@@ -336,6 +414,7 @@ describe('cartState', () => {
         offerName: 'Offer 2',
         price: 200,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 3,
         article: 'ART-2',
@@ -376,6 +455,34 @@ describe('cartState', () => {
 
       expect(newState.isOpen).toBe(false);
     });
+
+    it('should not affect items when toggling', () => {
+      const item: CartItem = {
+        id: 'item-1',
+        productUuid: 'product-1',
+        productName: 'Product 1',
+        productImage: '/image1.jpg',
+        offerUuid: 'offer-1',
+        offerName: 'Offer 1',
+        price: 100,
+        currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
+        quantity: 1,
+        article: 'ART-1',
+      };
+
+      const state: CartState = {
+        items: [item],
+        isOpen: false,
+      };
+
+      const newState = cartReducer(state, toggleCart());
+
+      expect(newState.items).toHaveLength(1);
+      expect(newState.items[0].id).toBe('item-1');
+      expect(newState.isOpen).toBe(true);
+    });
   });
 
   describe('openCart', () => {
@@ -398,6 +505,33 @@ describe('cartState', () => {
 
       const newState = cartReducer(state, openCart());
 
+      expect(newState.isOpen).toBe(true);
+    });
+
+    it('should not affect items when opening', () => {
+      const item: CartItem = {
+        id: 'item-1',
+        productUuid: 'product-1',
+        productName: 'Product 1',
+        productImage: '/image1.jpg',
+        offerUuid: 'offer-1',
+        offerName: 'Offer 1',
+        price: 100,
+        currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
+        quantity: 1,
+        article: 'ART-1',
+      };
+
+      const state: CartState = {
+        items: [item],
+        isOpen: false,
+      };
+
+      const newState = cartReducer(state, openCart());
+
+      expect(newState.items).toHaveLength(1);
       expect(newState.isOpen).toBe(true);
     });
   });
@@ -424,6 +558,33 @@ describe('cartState', () => {
 
       expect(newState.isOpen).toBe(false);
     });
+
+    it('should not affect items when closing', () => {
+      const item: CartItem = {
+        id: 'item-1',
+        productUuid: 'product-1',
+        productName: 'Product 1',
+        productImage: '/image1.jpg',
+        offerUuid: 'offer-1',
+        offerName: 'Offer 1',
+        price: 100,
+        currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
+        quantity: 1,
+        article: 'ART-1',
+      };
+
+      const state: CartState = {
+        items: [item],
+        isOpen: true,
+      };
+
+      const newState = cartReducer(state, closeCart());
+
+      expect(newState.items).toHaveLength(1);
+      expect(newState.isOpen).toBe(false);
+    });
   });
 
   describe('clearCart', () => {
@@ -437,6 +598,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 2,
         article: 'ART-1',
@@ -451,6 +613,7 @@ describe('cartState', () => {
         offerName: 'Offer 2',
         price: 200,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 3,
         article: 'ART-2',
@@ -471,6 +634,34 @@ describe('cartState', () => {
       const newState = cartReducer(initialState, clearCart());
 
       expect(newState.items).toHaveLength(0);
+      expect(newState.isOpen).toBe(false);
+    });
+
+    it('should not affect isOpen state', () => {
+      const item: CartItem = {
+        id: 'item-1',
+        productUuid: 'product-1',
+        productName: 'Product 1',
+        productImage: '/image1.jpg',
+        offerUuid: 'offer-1',
+        offerName: 'Offer 1',
+        price: 100,
+        currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
+        quantity: 1,
+        article: 'ART-1',
+      };
+
+      const state: CartState = {
+        items: [item],
+        isOpen: true,
+      };
+
+      const newState = cartReducer(state, clearCart());
+
+      expect(newState.items).toHaveLength(0);
+      expect(newState.isOpen).toBe(true);
     });
   });
 
@@ -490,6 +681,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         article: 'ART-1',
       };
@@ -509,6 +701,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 1,
         article: 'ART-1',
@@ -535,6 +728,7 @@ describe('cartState', () => {
         offerName: 'Offer 1',
         price: 100,
         currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
         unit: 'шт.',
         quantity: 2,
         article: 'ART-1',
@@ -559,6 +753,33 @@ describe('cartState', () => {
       const originalState = { ...state, items: [...state.items] };
 
       cartReducer(state, toggleCart());
+
+      expect(state).toEqual(originalState);
+    });
+
+    it('should not mutate original state when clearing cart', () => {
+      const item: CartItem = {
+        id: 'item-1',
+        productUuid: 'product-1',
+        productName: 'Product 1',
+        productImage: '/image1.jpg',
+        offerUuid: 'offer-1',
+        offerName: 'Offer 1',
+        price: 100,
+        currency: 'RUB',
+        currencySymbol: getCurrencySymbol('RUB'),
+        unit: 'шт.',
+        quantity: 1,
+        article: 'ART-1',
+      };
+
+      const state: CartState = {
+        items: [item],
+        isOpen: false,
+      };
+      const originalState = { ...state, items: [...state.items] };
+
+      cartReducer(state, clearCart());
 
       expect(state).toEqual(originalState);
     });

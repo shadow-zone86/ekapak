@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useAppDispatch } from '@/shared/config/store-hooks';
-import { updateQuantity } from '@/entities/cart/model/cartState';
+import { updateQuantity } from '@/entities/cart/model/store/cartState';
 import { CartItem as CartItemType } from '@/entities/cart/model/types';
 import { IProductUiDto, IOfferUiDto } from '@/entities/product/model/dto/types';
 import { CartItemView } from '@/entities/cart/ui/cart-item-view';
@@ -21,7 +21,7 @@ function CartItemContent({ cartItem, product }: CartItemProps) {
   const dispatch = useAppDispatch();
   const { quantity } = useProductQuantityContext();
 
-  const offer: IOfferUiDto | undefined = product?.offers.find((o) => o.uuid === cartItem.offerUuid);
+  const offer: IOfferUiDto | undefined = product?.offers.find((o: IOfferUiDto) => o.uuid === cartItem.offerUuid);
   const defaultOffer: IOfferUiDto | undefined = offer ? {
     ...offer,
     quantity: cartItem.quantity,
@@ -42,7 +42,7 @@ function CartItemContent({ cartItem, product }: CartItemProps) {
       price={
         <div className="cart-item__price text-left">
           <div className="cart-item__price-total text-base font-semibold text-black">
-            {(cartItem.price * quantity).toFixed(2)}{cartItem.currency.trim().toUpperCase() === 'RUB' ? 'Р' : cartItem.currency}
+            {(cartItem.price * quantity).toFixed(2)}{cartItem.currencySymbol}
           </div>
           <Description className="cart-item__price-details text-xs text-gray-600">
             {quantity} × {cartItem.price.toFixed(2)}

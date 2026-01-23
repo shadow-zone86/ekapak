@@ -6,7 +6,7 @@ import {
   removeItem,
   updateQuantity,
   closeCart,
-} from '@/entities/cart/model/cartState';
+} from '@/entities/cart/model/store/cartState';
 import { Button } from '@/shared/ui/button';
 import { H2, PTextBold, Price, Description } from '@/shared/ui/typography';
 
@@ -111,7 +111,7 @@ export function CartSidebar() {
                       </div>
                       <div className="cart-sidebar__item-price-wrapper flex items-center justify-between">
                         <Price className="cart-sidebar__item-price text-blue-600">
-                          {item.price.toFixed(2)} {item.currency === 'RUB' ? '₽' : item.currency} × {item.quantity} = {(item.price * item.quantity).toFixed(2)} {item.currency === 'RUB' ? '₽' : item.currency}
+                          {item.price.toFixed(2)} {item.currencySymbol} × {item.quantity} = {(item.price * item.quantity).toFixed(2)} {item.currencySymbol}
                         </Price>
                         <button
                           onClick={() => dispatch(removeItem(item.id))}
@@ -132,7 +132,7 @@ export function CartSidebar() {
               <div className="cart-sidebar__total-wrapper mb-4 flex items-center justify-between">
                 <PTextBold className="cart-sidebar__total-label text-black">Итого:</PTextBold>
                 <Price className="cart-sidebar__total-value text-blue-600">
-                  {total.toFixed(2)} {items[0]?.currency === 'RUB' ? '₽' : items[0]?.currency || ''}
+                  {total.toFixed(2)} {items[0]?.currencySymbol || ''}
                 </Price>
               </div>
               <Button className="cart-sidebar__checkout-button w-full" size="lg">

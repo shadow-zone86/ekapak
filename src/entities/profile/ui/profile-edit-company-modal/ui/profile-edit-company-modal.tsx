@@ -3,7 +3,8 @@
 import { ReactElement } from 'react';
 import { Modal } from '@/shared/ui/modal';
 import { useAppSelector, useAppDispatch } from '@/shared/config/store-hooks';
-import { updateCompanyData, type ProfileCompanyData } from '@/entities/profile/model/profileState';
+import { updateCompanyData } from '@/entities/profile/model/store/profileState';
+import type { ProfileCompanyData } from '@/entities/profile/model/types';
 import { useNotificationContext } from '@/shared/ui/notification-provider';
 
 export interface ProfileEditCompanyModalProps {

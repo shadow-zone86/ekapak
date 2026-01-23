@@ -7,14 +7,7 @@ import type {
   IOfferStoreDto,
   IOfferUiDto,
 } from '../types';
-
-function getCurrencySymbol(currency: string): string {
-  const normalizedCurrency = currency.trim().toUpperCase();
-  if (normalizedCurrency === 'RUB') {
-    return '₽';
-  }
-  return normalizedCurrency;
-}
+import { getCurrencySymbol } from '@/shared/lib/currency';
 
 function formatPrice(price: number, currencySymbol: string): string {
   return `${price.toFixed(2)} ${currencySymbol}`;

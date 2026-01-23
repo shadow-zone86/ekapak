@@ -1,10 +1,10 @@
 import { renderHook, act } from '@testing-library/react';
 import { useRemoveFromCart } from './useRemoveFromCart';
 import { useAppDispatch } from '@/shared/config/store-hooks';
-import { removeItem } from '@/entities/cart/model/cartState';
+import { removeItem } from '@/entities/cart/model/store/cartState';
 
 jest.mock('@/shared/config/store-hooks');
-jest.mock('@/entities/cart/model/cartState', () => ({
+jest.mock('@/entities/cart/model/store/cartState', () => ({
   removeItem: jest.fn(),
 }));
 

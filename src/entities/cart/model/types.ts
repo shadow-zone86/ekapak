@@ -8,6 +8,7 @@ export interface CartItem {
   offerName: string;
   price: number;
   currency: string;
+  currencySymbol: string; // Символ валюты для отображения (например, '₽' для RUB)
   quantity: number;
   unit: string; // Единица измерения
   article?: string;
