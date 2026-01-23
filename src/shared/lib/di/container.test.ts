@@ -56,8 +56,8 @@ describe('DIContainer', () => {
       const result2 = container.resolve(token);
 
       expect(factory).toHaveBeenCalledTimes(2);
-      expect(result1?.id).toBe(1);
-      expect(result2?.id).toBe(2);
+      expect((result1 as { id: number })?.id).toBe(1);
+      expect((result2 as { id: number })?.id).toBe(2);
       expect(result1).not.toBe(result2);
     });
   });
@@ -260,7 +260,7 @@ describe('DIContainer', () => {
 
       const service = container.resolve(serviceToken);
 
-      expect(service?.dependency.value).toBe('dep-value');
+      expect((service as { dependency: { value: string } })?.dependency.value).toBe('dep-value');
     });
   });
 });

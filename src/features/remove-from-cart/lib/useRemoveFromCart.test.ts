@@ -14,7 +14,7 @@ const mockRemoveItem = removeItem as jest.MockedFunction<typeof removeItem>;
 describe('useRemoveFromCart', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (useAppDispatch as jest.Mock).mockReturnValue(mockDispatch);
+    (useAppDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
   });
 
   it('should return handleRemove function', () => {

@@ -332,7 +332,7 @@ describe('prefetch', () => {
         },
       };
 
-      const mockCategories = [];
+      const mockCategories: unknown[] = [];
 
       mockGetProductsService.getProducts = jest.fn().mockResolvedValue(mockProductsResponse);
       mockGetCategoriesService.getCategories = jest.fn().mockResolvedValue(mockCategories);
