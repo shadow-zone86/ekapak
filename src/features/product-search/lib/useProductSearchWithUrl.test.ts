@@ -31,7 +31,7 @@ describe('useProductSearchWithUrl', () => {
     mockUseSearchParams.mockReturnValue({
       get: jest.fn(() => null),
       toString: jest.fn(() => ''),
-    } as ReturnType<typeof useSearchParams>);
+    } as unknown as ReturnType<typeof useSearchParams>);
   });
 
   afterEach(() => {
@@ -55,7 +55,7 @@ describe('useProductSearchWithUrl', () => {
     mockUseSearchParams.mockReturnValue({
       get: mockGet,
       toString: jest.fn(() => 'search=initial+query'),
-    } as ReturnType<typeof useSearchParams>);
+    } as unknown as ReturnType<typeof useSearchParams>);
 
     const { result } = renderHook(() => useProductSearchWithUrl());
 
@@ -73,13 +73,13 @@ describe('useProductSearchWithUrl', () => {
   });
 
   it('should update URL after debounce delay', () => {
-    const mockGet = jest.fn(() => null) as jest.MockedFunction<(name: string) => string | null>;
+    const mockGet = jest.fn<string | null, [string]>(() => null);
     const mockToString = jest.fn(() => '');
 
     mockUseSearchParams.mockReturnValue({
       get: mockGet,
       toString: mockToString,
-    } as ReturnType<typeof useSearchParams>);
+    } as unknown as ReturnType<typeof useSearchParams>);
 
     const { result } = renderHook(() => useProductSearchWithUrl({ debounceMs: 300 }));
 
@@ -108,7 +108,7 @@ describe('useProductSearchWithUrl', () => {
     mockUseSearchParams.mockReturnValue({
       get: mockGet,
       toString: mockToString,
-    } as ReturnType<typeof useSearchParams>);
+    } as unknown as ReturnType<typeof useSearchParams>);
 
     const { result } = renderHook(() => useProductSearchWithUrl({ debounceMs: 300 }));
 
@@ -136,7 +136,7 @@ describe('useProductSearchWithUrl', () => {
     mockUseSearchParams.mockReturnValue({
       get: mockGet,
       toString: mockToString,
-    } as ReturnType<typeof useSearchParams>);
+    } as unknown as ReturnType<typeof useSearchParams>);
 
     const { result } = renderHook(() => useProductSearchWithUrl({ debounceMs: 300 }));
 
@@ -155,13 +155,13 @@ describe('useProductSearchWithUrl', () => {
   });
 
   it('should debounce multiple rapid changes', () => {
-    const mockGet = jest.fn(() => null) as jest.MockedFunction<(name: string) => string | null>;
+    const mockGet = jest.fn<string | null, [string]>(() => null);
     const mockToString = jest.fn(() => '');
 
     mockUseSearchParams.mockReturnValue({
       get: mockGet,
       toString: mockToString,
-    } as ReturnType<typeof useSearchParams>);
+    } as unknown as ReturnType<typeof useSearchParams>);
 
     const { result } = renderHook(() => useProductSearchWithUrl({ debounceMs: 300 }));
 
@@ -185,13 +185,13 @@ describe('useProductSearchWithUrl', () => {
 
   it('should use current pathname in URL', () => {
     mockUsePathname.mockReturnValue('/products');
-    const mockGet = jest.fn(() => null) as jest.MockedFunction<(name: string) => string | null>;
+    const mockGet = jest.fn<string | null, [string]>(() => null);
     const mockToString = jest.fn(() => '');
 
     mockUseSearchParams.mockReturnValue({
       get: mockGet,
       toString: mockToString,
-    } as ReturnType<typeof useSearchParams>);
+    } as unknown as ReturnType<typeof useSearchParams>);
 
     const { result } = renderHook(() => useProductSearchWithUrl({ debounceMs: 300 }));
 
@@ -209,13 +209,13 @@ describe('useProductSearchWithUrl', () => {
   });
 
   it('should use default debounce delay if not provided', () => {
-    const mockGet = jest.fn(() => null) as jest.MockedFunction<(name: string) => string | null>;
+    const mockGet = jest.fn<string | null, [string]>(() => null);
     const mockToString = jest.fn(() => '');
 
     mockUseSearchParams.mockReturnValue({
       get: mockGet,
       toString: mockToString,
-    } as ReturnType<typeof useSearchParams>);
+    } as unknown as ReturnType<typeof useSearchParams>);
 
     const { result } = renderHook(() => useProductSearchWithUrl());
 
@@ -233,13 +233,13 @@ describe('useProductSearchWithUrl', () => {
   });
 
   it('should call router.push with scroll: false option', () => {
-    const mockGet = jest.fn(() => null) as jest.MockedFunction<(name: string) => string | null>;
+    const mockGet = jest.fn<string | null, [string]>(() => null);
     const mockToString = jest.fn(() => '');
 
     mockUseSearchParams.mockReturnValue({
       get: mockGet,
       toString: mockToString,
-    } as ReturnType<typeof useSearchParams>);
+    } as unknown as ReturnType<typeof useSearchParams>);
 
     const { result } = renderHook(() => useProductSearchWithUrl({ debounceMs: 300 }));
 
@@ -255,13 +255,13 @@ describe('useProductSearchWithUrl', () => {
   });
 
   it('should trim search query before setting URL', () => {
-    const mockGet = jest.fn(() => null) as jest.MockedFunction<(name: string) => string | null>;
+    const mockGet = jest.fn<string | null, [string]>(() => null);
     const mockToString = jest.fn(() => '');
 
     mockUseSearchParams.mockReturnValue({
       get: mockGet,
       toString: mockToString,
-    } as ReturnType<typeof useSearchParams>);
+    } as unknown as ReturnType<typeof useSearchParams>);
 
     const { result } = renderHook(() => useProductSearchWithUrl({ debounceMs: 300 }));
 

@@ -61,8 +61,8 @@ describe('useAddToCart', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (useAppDispatch as jest.Mock).mockReturnValue(mockDispatch);
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = { cart: { items: mockCartItems } };
       return selector(state);
     });

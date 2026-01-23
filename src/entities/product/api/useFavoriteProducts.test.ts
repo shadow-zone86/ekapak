@@ -83,7 +83,7 @@ describe('useFavoriteProducts', () => {
   });
 
   it('should return empty products when favorites list is empty', () => {
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: [],
@@ -133,7 +133,7 @@ describe('useFavoriteProducts', () => {
       ],
     };
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: ['product-1', 'product-2'],
@@ -165,7 +165,7 @@ describe('useFavoriteProducts', () => {
   it('should handle error when fetching products', async () => {
     const error = new Error('Failed to fetch product');
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: ['product-1'],
@@ -196,7 +196,7 @@ describe('useFavoriteProducts', () => {
       offers: [],
     };
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: ['product-1', 'product-2'],
@@ -232,7 +232,7 @@ describe('useFavoriteProducts', () => {
 
     const error = new Error('Failed to fetch product-2');
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: ['product-1', 'product-2'],
@@ -266,7 +266,7 @@ describe('useFavoriteProducts', () => {
       offers: [],
     };
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: ['product-1'],
@@ -307,7 +307,7 @@ describe('useFavoriteProducts', () => {
       ],
     };
 
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: ['product-1'],

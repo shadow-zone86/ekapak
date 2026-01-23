@@ -29,11 +29,11 @@ describe('useToggleFavorite', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (useAppDispatch as jest.Mock).mockReturnValue(mockDispatch);
+    (useAppDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch);
   });
 
   it('should return isFavorite as false when product is not in favorites', () => {
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: ['product-456', 'product-789'],
@@ -49,7 +49,7 @@ describe('useToggleFavorite', () => {
   });
 
   it('should return isFavorite as true when product is in favorites', () => {
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: ['product-123', 'product-456'],
@@ -64,7 +64,7 @@ describe('useToggleFavorite', () => {
   });
 
   it('should dispatch toggleFavorite action when toggleFavorite is called', () => {
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: [],
@@ -88,7 +88,7 @@ describe('useToggleFavorite', () => {
   });
 
   it('should handle toggleFavorite with different product UUIDs', () => {
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: [],
@@ -115,7 +115,7 @@ describe('useToggleFavorite', () => {
   });
 
   it('should return correct isFavorite when product is in favorites list', () => {
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: ['product-456', 'product-123'],
@@ -130,7 +130,7 @@ describe('useToggleFavorite', () => {
   });
 
   it('should handle multiple toggleFavorite calls', () => {
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: [],
@@ -156,7 +156,7 @@ describe('useToggleFavorite', () => {
   });
 
   it('should handle empty favorites list', () => {
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: [],
@@ -179,7 +179,7 @@ describe('useToggleFavorite', () => {
 
   it('should handle product UUID with special characters', () => {
     const specialUuid = 'product-123-abc-def-456';
-    (useAppSelector as jest.Mock).mockImplementation((selector) => {
+    (useAppSelector as unknown as jest.Mock).mockImplementation((selector) => {
       const state = {
         favorites: {
           productUuids: [specialUuid],
